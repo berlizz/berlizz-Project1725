@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.berlizz.mapper.ListMapper">
+
+	<select id="listAll" resultType="ListVO">
+		select * 
+		from tbl_list
+		where listNumber > 0
+	</select>
+	
+	<select id="listSelect" resultType="ListVO">
+		select *
+		from tbl_list
+		where regDate = #{regDate}
+		order by regTimestamp desc
+	</select>
+	
+	<insert id="createList">
+		insert into tbl_list(title, writer, description, regDate)
+		values (#{title}, #{writer}, #{description}, #{regDate})
+	</insert>
+	
+	<update id="updateList">
+		update tbl_list
+		set title = #{title}, description = #{description}
+		where listNumber = #{listNumber}
+	</update>
+	
+	<delete id="deleteList">
+		delete
+		from tbl_list
+		where listNumber = #{listNumber}
+	</delete>
+
+</mapper>
