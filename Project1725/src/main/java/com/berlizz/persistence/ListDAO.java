@@ -15,4 +15,6 @@ public interface ListDAO {
 	public void updateList(ListVO vo) throws Exception;
 	
 	public void deleteList(Integer listNumber) throws Exception;
+	
+	public ListVO listSelectOne(Integer listNumber) throws Exception;
 }

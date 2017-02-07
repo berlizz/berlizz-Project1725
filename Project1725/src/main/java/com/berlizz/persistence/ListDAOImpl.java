@@ -28,6 +28,11 @@ public class ListDAOImpl implements ListDAO {
 	}
 	
 	@Override
+	public ListVO listSelectOne(Integer listNumber) throws Exception {
+		return session.selectOne(namespace + ".listSelectOne", listNumber);
+	}
+	
+	@Override
 	public void createList(ListVO vo) throws Exception {
 		session.insert(namespace + ".createList", vo);
 	}

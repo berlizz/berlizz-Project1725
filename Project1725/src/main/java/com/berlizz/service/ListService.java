@@ -10,6 +10,8 @@ public interface ListService {
 	
 	public List<ListVO> listSelect(String regDate) throws Exception;
 	
+	public ListVO listSelectOne(Integer listNumber) throws Exception;
+	
 	public void createList(ListVO vo) throws Exception;
 	
 	public void updateList(ListVO vo) throws Exception;

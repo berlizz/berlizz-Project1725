@@ -24,6 +24,11 @@ public class ListServiceImpl implements ListService {
 	public List<ListVO> listSelect(String regDate) throws Exception {
 		return dao.listSelect(regDate);
 	}
+	
+	@Override
+	public ListVO listSelectOne(Integer listNumber) throws Exception {
+		return dao.listSelectOne(listNumber);
+	}
 
 	@Override
 	public void createList(ListVO vo) throws Exception {
