@@ -14,14 +14,15 @@
 <body>
 
 	<div class="col-md-4">
-		<form id="form">
-			<ul id="totalList">				
+		
+			<ul class="totalList">				
 			</ul>
 			
 			<input type="text" id="title">
 			<button type="button" id="listAddBtn">ADD</button>
-		</form>
+		
 	</div>
+	
 	
 	<!-- modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -36,6 +37,15 @@
 				</div>				
 				
 				<div class="modal-body">
+					<h4>Description <button type="button" class="btn btn-default btn-xs descriptionEdit">Edit</button></h4>
+					
+					<p class="description"></p>
+					
+					<div class="EditWindow" style="display:none">
+						<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
+						<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
+					</div>
+					
 				</div>
 				
 				<div class="modal-footer">
@@ -46,7 +56,6 @@
 		</div>
 	</div>
 	
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Modal</button>
 	
 <script src="/resources/jquery/jquery-3.1.1.min.js"></script>
 <script src="/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
@@ -62,8 +71,8 @@
 <!-- 리스트 템플릿 -->
 <script id="listTemplate" type="text/x-handlebars-template">
 {{#each .}}
-	<li data-ln={{listNumber}} class="eachList">{{title}}
-		<button type="button" id="viewBtn" class=btn btn-default>view</button>
+	<li data-ln={{listNumber}} class="eachList" data-toggle="modal" data-target="#myModal">{{title}}
+		<button type="button" class="btn btn-default viewBtn">view</button>
 	</li>
 {{/each}}
 </script>
@@ -77,7 +86,7 @@
 	
 	var writer = "tester";
 	
-	$("document").ready(function() {
+	$(document).ready(function() {
 		getList();
 	});
 
@@ -108,7 +117,7 @@
 				regDate : regDate
 			}),
 			success : function(data) {
-				if(data = "success") {
+				if(data == "success") {
 					getList();
 				}
 			}
@@ -124,28 +133,66 @@
 			var template = Handlebars.compile($("#listTemplate").html());
 			var html = template(list);
 			$(".eachList").remove();
-			$("#totalList").after(html);
+			$(".totalList").after(html);
 		});
-		
+
 		$("#title").val("");
 	}
 
 
-	/* 모달 창 처리 */
-	$("#viewBtn").on("click", function() {
-		var that = $(this).parent();
-		var listNumber = that.attr("data-ln");
-		console.log("----" + listNumber);
+	/* 모달 창 처리 */	
+	$(document).on("click", ".eachList", function() {
+		var listNumber = $(this).attr("data-ln");
 		
 		$.getJSON("/list/read/" + listNumber, function(list) {
 			$(".modal-header").attr("data-ln", list.listNumber);
 			$(".modal-title").html(list.title);
-			$(".modal-body").html(list.description);
-			
+			$(".description").html(list.description);
 		});
 	});
+	$("#myModal").on("hidden.bs.modal", function() {
+		$(".description").show();
+		$(".EditWindow").hide();
+	})
 	
+	/* 모달 내 Edit 버튼 이벤트 처리 */
+	$(".descriptionEdit").on("click", function() {
+		$("#editText").html($(".description").html().replace(/<br>/gi, "\n"));
+		$(".description").hide();
+		$(".EditWindow").show();
+	});
 	
+
+	/* 모달 description save 버튼 이벤트 처리 */
+	$(".editBtn").on("click", function() {
+		var listNumber = $(".modal-header").attr("data-ln");
+		var title = $(".modal-title").html();
+		var description = $("#editText").val().replace(/\n/gi, "<br>");
+		
+		$.ajax({
+			type : "put",
+			url : "/list/" + listNumber,
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "put"
+			},
+			dataType : "text",
+			data : JSON.stringify({
+				listNumber : listNumber,
+				title : title,
+				description : description
+			}),
+			success : function(data) {
+				if(data == "success") {
+					$(".description").html(description);
+					$(".description").show();
+					$(".EditWindow").hide();
+				}
+			}
+		});
+		
+	});
+
 </script>
 
 

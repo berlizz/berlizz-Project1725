@@ -52,7 +52,7 @@ public class ListController {
 		vo.setListNumber(listNumber);
 		try {
 			service.updateList(vo);
-			entity = new ResponseEntity<>("succuss", HttpStatus.OK);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
