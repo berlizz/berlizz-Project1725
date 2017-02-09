@@ -44,7 +44,7 @@ public class ListController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/{listNumber}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+	@RequestMapping(value = "/{listNumber}", method = RequestMethod.PUT)
 	public ResponseEntity<String> modifyList(@PathVariable("listNumber") int listNumber, @RequestBody ListVO vo) {
 		logger.info("modifyList()");
 		ResponseEntity<String> entity = null;
@@ -112,6 +112,57 @@ public class ListController {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/uncompleted", method = RequestMethod.GET)
+	public ResponseEntity<List<ListVO>> uncompletedSelect() {
+		logger.info("uncompletedSelect()");
+		ResponseEntity<List<ListVO>> entity = null;
+		
+		try {
+			List<ListVO> list = service.uncompletedSelect();
+			entity = new ResponseEntity<>(list, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/completed", method = RequestMethod.GET)
+	public ResponseEntity<List<ListVO>> completedSelect() {
+		logger.info("completedSelect()");
+		ResponseEntity<List<ListVO>> entity = null;
+		
+		try {
+			List<ListVO> list = service.completedSelect();
+			entity = new ResponseEntity<>(list, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/{listNumber}", method = RequestMethod.PATCH)
+	public ResponseEntity<String> completionUpdate(@PathVariable("listNumber") int listNumber) {
+		logger.info("completionUpdate()");
+		ResponseEntity<String> entity = null;
+		
+		try {
+			service.completionUpdate(listNumber);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;

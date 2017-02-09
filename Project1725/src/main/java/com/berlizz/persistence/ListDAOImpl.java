@@ -33,6 +33,16 @@ public class ListDAOImpl implements ListDAO {
 	}
 	
 	@Override
+	public List<ListVO> uncompletedSelect() throws Exception {
+		return session.selectList(namespace + ".uncompletedSelect");
+	}
+	
+	@Override
+	public List<ListVO> completedSelect() throws Exception {
+		return session.selectList(namespace + ".completedSelect");
+	}
+	
+	@Override
 	public void createList(ListVO vo) throws Exception {
 		session.insert(namespace + ".createList", vo);
 	}
@@ -40,6 +50,11 @@ public class ListDAOImpl implements ListDAO {
 	@Override
 	public void updateList(ListVO vo) throws Exception {
 		session.update(namespace + ".updateList", vo);
+	}
+	
+	@Override
+	public void completionUpdate(Integer listNumber) throws Exception {
+		session.update(namespace + ".completionUpdate", listNumber);
 	}
 	
 	@Override

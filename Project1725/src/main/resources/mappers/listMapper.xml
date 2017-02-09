@@ -12,9 +12,9 @@
 	</select>
 	
 	<select id="listSelect" resultType="ListVO">
-		select *
+		select listNumber, title, writer, description, regTimestamp, regDate
 		from tbl_list
-		where regDate = #{regDate}
+		where regDate = #{regDate} and completed = 0
 		order by regTimestamp desc
 	</select>
 	
@@ -36,9 +36,33 @@
 	</delete>
 	
 	<select id="listSelectOne" resultType="ListVO">
-		select *
+		select listNumber, title, writer, description, regTimestamp, regDate
 		from tbl_list
 		where listNumber = #{listNumber}
 	</select>
+	
+	<select id="uncompletedSelect" resultType="ListVO">
+		<![CDATA[
+			select listNumber, title, writer, description, regTimestamp, regDate
+			from tbl_list
+			where regDate < curdate() and completed = 0
+			order by regTimestamp desc
+		]]>
+	</select>
+	
+	<select id="completedSelect" resultType="listVO">
+		<![CDATA[
+			select listNumber, title, writer, description, regTimestamp, completedTimestamp
+			from tbl_list
+			where completedTimestamp > curdate() and completed = 1
+			order by regTimestamp desc
+		]]>
+	</select>
+	
+	<update id="completionUpdate">
+		update tbl_list
+		set completed = 1, completedTimestamp = now()
+		where listNumber = #{listNumber}
+	</update>
 
 </mapper>

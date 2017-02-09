@@ -11,6 +11,7 @@ public class ListVO {
 	private Date regTimestamp;
 	private String regDate;
 	private Boolean completed;
+	private Date completedTimestamp;
 	
 	@Override
 	public String toString() {
@@ -72,6 +73,15 @@ public class ListVO {
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
 	}
+
+	public Date getCompletedTimestamp() {
+		return completedTimestamp;
+	}
+
+	public void setCompletedTimestamp(Date completedTimestamp) {
+		this.completedTimestamp = completedTimestamp;
+	}
+	
 	
 	
 }

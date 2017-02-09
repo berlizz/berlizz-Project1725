@@ -1,8 +1,5 @@
 package com.berlizz.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.berlizz.domain.ListVO;
 import com.berlizz.service.ListService;
 
 @Controller
@@ -30,10 +26,10 @@ public class BoardController {
 	public void board(@RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("date") int date, Model model) throws Exception {
 		logger.info("board()");
 		
-		String regDate = LocalDate.of(year, month, date).toString();
+		/*String regDate = LocalDate.of(year, month, date).toString();
 		
 		List<ListVO> listVO = service.listSelect(regDate);
-		model.addAttribute("listVO", listVO);
+		model.addAttribute("listVO", listVO);*/
 		
 	}
 }

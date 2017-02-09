@@ -29,6 +29,16 @@ public class ListServiceImpl implements ListService {
 	public ListVO listSelectOne(Integer listNumber) throws Exception {
 		return dao.listSelectOne(listNumber);
 	}
+	
+	@Override
+	public List<ListVO> uncompletedSelect() throws Exception {
+		return dao.uncompletedSelect();
+	}
+	
+	@Override
+	public List<ListVO> completedSelect() throws Exception {
+		return dao.completedSelect();
+	}
 
 	@Override
 	public void createList(ListVO vo) throws Exception {
@@ -38,6 +48,11 @@ public class ListServiceImpl implements ListService {
 	@Override
 	public void updateList(ListVO vo) throws Exception {
 		dao.updateList(vo);
+	}
+	
+	@Override
+	public void completionUpdate(Integer listNumber) throws Exception {
+		dao.completionUpdate(listNumber);
 	}
 
 	@Override
