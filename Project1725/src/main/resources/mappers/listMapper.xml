@@ -36,7 +36,7 @@
 	</delete>
 	
 	<select id="listSelectOne" resultType="ListVO">
-		select listNumber, title, writer, description, regTimestamp, regDate
+		select listNumber, title, writer, description, regTimestamp, completedTimestamp
 		from tbl_list
 		where listNumber = #{listNumber}
 	</select>

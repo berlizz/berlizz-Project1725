@@ -33,7 +33,7 @@
 	
 	
 	<!-- uncompleted list modal -->
-	<div class="modal fade" id="uncompletedModal" tabindex="-1" role="dialog" aria-labelledby="uncompletedModalLabel" aria-hidden="true">
+	<div class="modal" id="uncompletedModal" tabindex="-1" role="dialog" aria-labelledby="uncompletedModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				
@@ -54,15 +54,28 @@
 				</div>
 				
 				<div class="modal-body">
+					
 					<h4>Description <button type="button" class="btn btn-default btn-xs descriptionEdit">Edit</button></h4>
+						
+					<div class="form-inline">	
+						<div class="form-group col-md-8">
+							<p class="description"></p>
+						
+							<div class="EditWindow" style="display:none">
+								<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
+								<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
+							</div>
+						</div>
 					
-					<p class="description"></p>
 					
-					<div class="EditWindow" style="display:none">
-						<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
-						<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
+						<div class="form-group col-md-4">
+							<div class="list-group">
+								<a class="list-group-item" data-toggle="modal" href="#attachmentModal">hahaha</a>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 				
 				<div class="modal-footer">
 					<button type="button" id="completeChkBtn" class="btn btn-primary">Complete</button>
@@ -110,6 +123,24 @@
 				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- file attachment modal -->
+	<div class="modal" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledly="attachmentModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">Attachment Modal</h3>
+					<p>Attachment</p>
+				</div>
+				<div class="modal-body">
+					
 				</div>
 			</div>
 		</div>
@@ -170,14 +201,16 @@
 	
 	/* regTimestamp 포매팅 */
 	function timeFormat(milliseconds) {
+		console.log(milliseconds);
 		var time = new Date(milliseconds);
 		var year = time.getFullYear();
-		var month = time.getMonth() + 1;
-		var date = time.getDate();
-		var hours = time.getHours();
-		var minutes = time.getMinutes();
+		var month = (time.getMonth() + 1).toString();
+		var date = time.getDate().toString();
+		var hours = time.getHours().toString();
+		var minutes = time.getMinutes().toString();
 		
-		return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
+		return year + "-" + (month[1]? month:"0"+month[0]) + "-" + (date[1]? date:"0"+date[0]) 
+					+ " " + (hours[1]? hours:"0"+hours[1]) + ":" + (minutes[1]? minutes:"0"+minutes[0]);
 	}
 
 	/* 리스트 추가 처리 */
@@ -222,7 +255,7 @@
 		});
 	});
 	
-	/* 리스트 조회 */
+	/* 당일 추가된 리스트 조회 */
 	function getList() {		
 		$.getJSON("/list/" + regDate, function(list) {
 			var template = Handlebars.compile($("#listTemplate").html());
@@ -283,7 +316,7 @@
 		});
 	});
 	
-	/* 완료된 리스트 모달창 처리 */
+	/* 당일 완료된 리스트 모달창 처리 */
 	$(document).on("click", ".completedEachList", function() {
 		var listNumber = $(this).attr("data-ln");
 		var displayDate = "";
@@ -292,6 +325,7 @@
 			$(".modal-header").attr("data-ln", data.listNumber);
 			$(".modal_title").html(data.title);
 			$(".description").html(data.description);
+			console.log("json" + data.completedTimestamp);
 			displayDate = "Registered date " + timeFormat(data.regTimestamp) 
 							+ "<br>Completed date " + timeFormat(data.completedTimestamp);
 			$(".regTimestamp").html(displayDate);

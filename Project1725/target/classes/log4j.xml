@@ -14,7 +14,7 @@
 	<logger name="com.berlizz.controller">
 		<level value="info" />
 	</logger>
-	<logger name="com.berlizz.interceptor">
+	<logger name="com.berlizz.util">
 		<level value="info" />
 	</logger>
 	
