@@ -10,6 +10,17 @@
 
 <link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
+<!-- 파일 업로드 창 스타일 -->
+<style>
+	.fileDrop {
+		width: 80%;
+		height: 100px;
+		border: 1px dotted gray;
+		background-color: lightslategrey;
+		margin: auto;
+	}
+</style>
+
 </head>
 <body>
 
@@ -140,7 +151,15 @@
 					<p>Attachment</p>
 				</div>
 				<div class="modal-body">
-					
+					<div style="text-align:center;">
+						<label>File Drop Here</label>
+						<div class="fileDrop">
+						
+						</div>
+						<ul class="uploadList">
+							
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -401,6 +420,54 @@
 	});
 	
 	
+</script>
+
+<script id="uploadTemplate" type="text/x-handlebars-template">
+<li>
+	<span class="mailbox-attchment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+	<div class="mailbox-attchment-info">
+		<a href="{{getLink}}" class="mailbox-attchment-name">{{fileName}}</a>
+		<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a>
+	</div>
+</li>
+</script>
+<script src="/resources/js/upload.js"></script>
+<script>
+	var template = Handlebars.compile($("#uploadTemplate").html());
+	
+	/* 업로드 창 이벤트 처리 */
+	$(".fileDrop").on("dragenter dragover", function(event) {
+		event.preventDefault();
+		
+	});
+	$(".fileDrop").on("drop", function(event) {
+		event.preventDefault();
+		
+		var files = event.originalEvent.dataTransfer.files;
+		var file = files[0];
+		
+		var formData = new FormData();
+		formData.append("file", file);
+		
+		$.ajax({
+			type : "post",
+			dataType : "text",
+			url : "/upload/uploadAjax",
+			processData : false,
+			contentType : false,
+			data : formData,
+			success : function(data) {
+				var fileInfo = getFileInfo(data);
+				var html = template(fileInfo);
+				
+				$(".uploadList").append(html);
+			}
+			
+			
+		});
+		
+	});
+
 </script>
 
 
