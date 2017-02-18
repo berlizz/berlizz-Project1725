@@ -422,6 +422,7 @@
 	
 </script>
 
+<!-- 업로드 리스트 템플릿 -->
 <script id="uploadTemplate" type="text/x-handlebars-template">
 <li>
 	<span class="mailbox-attchment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
@@ -466,6 +467,24 @@
 			
 		});
 		
+	});
+	
+	$(".uploadList").on("click", "delBtn", function() {
+		var that = $(this);
+		
+		$.ajax({
+			type : "post",
+			dataType : "text"
+			url : "deleteFile",
+			data : {
+				fileName : $(this).attr("data-src")
+			},
+			success : function(result) {
+				if(result == "success") {
+					alert("success");
+				}
+			}
+		});
 	});
 
 </script>
