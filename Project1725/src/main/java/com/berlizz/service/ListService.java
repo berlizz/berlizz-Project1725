@@ -23,4 +23,6 @@ public interface ListService {
 	public void completionUpdate(Integer listNumber) throws Exception;
 	
 	public void deleteList(Integer listNumber) throws Exception;
+	
+	public void addAttach(String fullName, Integer listNumber) throws Exception;
 }

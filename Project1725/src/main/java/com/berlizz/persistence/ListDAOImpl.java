@@ -1,6 +1,8 @@
 package com.berlizz.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -60,5 +62,14 @@ public class ListDAOImpl implements ListDAO {
 	@Override
 	public void deleteList(Integer listNumber) throws Exception {
 		session.delete(namespace + ".deleteList", listNumber);
+	}
+	
+	@Override
+	public void addAttach(String fullName, Integer listNumber) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("fullName", fullName);
+		map.put("listNumber", String.valueOf(listNumber));
+		
+		session.insert(namespace + ".addAttach", map);
 	}
 }

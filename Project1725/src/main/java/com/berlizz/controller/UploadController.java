@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -14,11 +15,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.berlizz.service.ListService;
 import com.berlizz.util.MediaUtils;
 import com.berlizz.util.UploadFileUtils;
 
@@ -31,6 +35,9 @@ public class UploadController {
 	@Resource(name = "uploadPath")
 	private String uploadPath;
 	
+	@Inject
+	private ListService service;
+	
 	
 	@RequestMapping(value = "uploadAjax", method = RequestMethod.POST)
 	public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
@@ -40,7 +47,7 @@ public class UploadController {
 				UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
 	}
 	
-	@RequestMapping("/displayFile")
+	@RequestMapping(value = "/displayFile", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> displayFile(String fileName) {
 		logger.info("displayFile()");
 		
@@ -78,9 +85,10 @@ public class UploadController {
 		
 	}
 	
-	@RequestMapping("/deleteFile")
+	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String fileName) {
 		logger.info("deleteFile()");
+		
 		
 		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 		MediaType mediaType = MediaUtils.getMediaType(formatName);
@@ -95,5 +103,25 @@ public class UploadController {
 		new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/register/{listNumber}", method = RequestMethod.POST)
+	public ResponseEntity<String> registerFile(@RequestParam("files[]") String[] files, @PathVariable Integer listNumber) {
+		logger.info("registerFile()");
+		
+		ResponseEntity<String> entity = null;
+		try {
+			for(String fullName : files) {
+				service.addAttach(fullName, listNumber);
+			}
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 }

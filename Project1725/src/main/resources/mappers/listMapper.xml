@@ -64,5 +64,10 @@
 		set completed = 1, completedTimestamp = now()
 		where listNumber = #{listNumber}
 	</update>
+	
+	<insert id="addAttach">
+		insert into tbl_attach(fullName, listNumber)
+		values(#{fullName}, #{listNumber})
+	</insert>
 
 </mapper>

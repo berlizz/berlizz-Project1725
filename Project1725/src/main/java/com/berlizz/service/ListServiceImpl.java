@@ -59,5 +59,10 @@ public class ListServiceImpl implements ListService {
 	public void deleteList(Integer listNumber) throws Exception {
 		dao.deleteList(listNumber);
 	}
+	
+	@Override
+	public void addAttach(String fullName, Integer listNumber) throws Exception {
+		dao.addAttach(fullName, listNumber);
+	}
 
 }

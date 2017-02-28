@@ -161,6 +161,9 @@
 						</ul>
 					</div>
 				</div>
+				<div class="modal-footer">
+					<button type="button" id="attachedSubmitBtn" class="btn btn-primary">Submit</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -321,7 +324,7 @@
 	$("#uncompletedModal").on("hidden.bs.modal", function() {
 		$(".description").show();
 		$(".EditWindow").hide();
-	})
+	});
 	
 	/* 미완료 리스트 모달 창 처리 */
 	$(document).on("click", ".uncompletedEachList", function() {
@@ -350,6 +353,13 @@
 			$(".regTimestamp").html(displayDate);
 		});
 	});
+	
+	/* 첨부파일 조회 */
+	function getAttach(listNumber) {
+		$.getJSON("/list/getAttach/" + listNumber, function(data) {
+			
+		});
+	}
 
 	
 	/* 모달 내 Edit 버튼 이벤트 처리 */
@@ -469,19 +479,48 @@
 		
 	});
 	
-	$(".uploadList").on("click", "delBtn", function() {
+	$(".uploadList").on("click", ".delBtn", function(event) {
+		event.preventDefault();
+		
 		var that = $(this);
 		
 		$.ajax({
 			type : "post",
-			dataType : "text"
-			url : "deleteFile",
+			dataType : "text",
+			url : "/upload/deleteFile",
 			data : {
-				fileName : $(this).attr("data-src")
+				fileName : that.attr("href")
 			},
 			success : function(result) {
 				if(result == "success") {
 					alert("success");
+					that.closest("li").remove();
+				}
+			}
+		});
+	});
+	
+	/* 첨부파일 submit 버튼 이벤트 처리 */
+	$("#attachedSubmitBtn").on("click", function() {
+		var files = new Array();
+		var listNumber = $("#uncompletedModal .modal-header").attr("data-ln");
+		
+		$(".uploadList .delBtn").each(function() {
+			files.push($(this).attr("href"));
+		});
+		console.log(files);
+		
+		$.ajax({
+			type : "post",
+			dataType : "text",
+			url : "/upload/register/" + listNumber,
+			data : {
+				files : files
+			},
+			success : function(result) {
+				if(result == "success") {
+					$("#attachmentModal").modal("hide");
+					$(".uploadList li").remove();
 				}
 			}
 		});
