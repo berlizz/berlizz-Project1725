@@ -89,20 +89,30 @@ public class UploadController {
 	public ResponseEntity<String> deleteFile(String fileName) {
 		logger.info("deleteFile()");
 		
-		
-		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-		MediaType mediaType = MediaUtils.getMediaType(formatName);
-		
-		if(mediaType != null) {
-			String front = fileName.substring(0, 12);
-			String end = fileName.substring(14);
+		ResponseEntity<String> entity = null;
+		try {
+			service.deleteAttach(fileName);
 			
-			new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
+			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+			MediaType mediaType = MediaUtils.getMediaType(formatName);
+			
+			if(mediaType != null) {
+				String front = fileName.substring(0, 12);
+				String end = fileName.substring(14);
+				
+				new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
+			}
+			
+			new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
+			
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
-		
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		return entity;
 	}
 	
 	@RequestMapping(value = "/register/{listNumber}", method = RequestMethod.POST)

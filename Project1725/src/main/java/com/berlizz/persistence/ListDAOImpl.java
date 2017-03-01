@@ -72,4 +72,14 @@ public class ListDAOImpl implements ListDAO {
 		
 		session.insert(namespace + ".addAttach", map);
 	}
+	
+	@Override
+	public List<String> getAttach(Integer listNumber) throws Exception {
+		return session.selectList(namespace + ".getAttach", listNumber);
+	}
+	
+	@Override
+	public void deleteAttach(String fullName) throws Exception {
+		session.delete(namespace + ".deleteAttach", fullName);
+	}
 }

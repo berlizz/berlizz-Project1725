@@ -69,5 +69,18 @@
 		insert into tbl_attach(fullName, listNumber)
 		values(#{fullName}, #{listNumber})
 	</insert>
+	
+	<select id="getAttach" resultType="String">
+		select fullName
+		from tbl_attach
+		where listNumber = #{listNumber}
+		order by regDate desc
+	</select>
+	
+	<delete id="deleteAttach">
+		delete 
+		from tbl_attach
+		where fullName = #{fullName}
+	</delete>
 
 </mapper>

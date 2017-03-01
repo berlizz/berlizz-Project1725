@@ -11,8 +11,8 @@ function checkImageType(fileName) {
 
 
 function getFileInfo(fullName) {
-	var fileName, imgsrc, getLink;
-	var fileLink;
+	console.log("getFileInfo==" + fullName);
+	var fileName, imgsrc, getLink, fileLink;
 	
 	if(checkImageType(fullName)) {
 		imgsrc = "/upload/displayFile?fileName=" + fullName;
@@ -23,7 +23,7 @@ function getFileInfo(fullName) {
 
 		getLink = "/upload/displayFile?fileName=" + front + end;
 	} else {
-		imgsrc = "/resources/dist/img/file.png";
+		imgsrc = "/resources/images/file-icon.png";
 		fileLink = fullName.substr(12);
 		getLink = "/upload/displayFile?fileName=" + fullName;
 	}

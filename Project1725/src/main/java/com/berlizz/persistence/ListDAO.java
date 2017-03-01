@@ -26,4 +26,8 @@ public interface ListDAO {
 	
 	public void addAttach(String fullName, Integer listNumber) throws Exception;
 	
+	public List<String> getAttach(Integer listNumber) throws Exception;
+	
+	public void deleteAttach(String fullName) throws Exception;
+	
 }

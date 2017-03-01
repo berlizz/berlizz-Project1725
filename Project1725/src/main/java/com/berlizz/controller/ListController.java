@@ -168,4 +168,21 @@ public class ListController {
 		return entity;
 	}
 	
+	@RequestMapping(value = "/getAttach/{listNumber}", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getAttach(@PathVariable("listNumber") int listNumber) {
+		logger.info("getAttach()");
+		ResponseEntity<List<String>> entity = null;
+		
+		try {
+			List<String> list = service.getAttach(listNumber);
+			entity = new ResponseEntity<>(list, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
 }

@@ -85,6 +85,10 @@
 							</div>
 						</div>
 					</div>
+					
+					<ul class="attachList">
+					</ul>
+					
 				</div>
 				
 				
@@ -130,6 +134,9 @@
 				
 				<div class="modal-body">
 					<p class="description"></p>
+					
+					<ul class="attachList">
+					</ul>
 				</div>
 				
 				<div class="modal-footer">
@@ -184,7 +191,6 @@
 <script id="listTemplate" type="text/x-handlebars-template">
 {{#each .}}
 	<li data-ln={{listNumber}} class="eachList" data-toggle="modal" data-target="#uncompletedModal">{{title}}
-		<button type="button" class="btn btn-default viewBtn">view</button>
 	</li>
 {{/each}}
 </script>
@@ -205,6 +211,17 @@
 {{/each}}
 </script>
 
+<!-- 첨부파일 리스트 템플릿 -->
+<script id="attachTemplate" type="text/x-handlebars-template">
+	<li data-src="{{fullName}}" class="attachment">
+		<span class=""><img src="{{imgsrc}}" alt="attachment"></span>
+		<div class="">
+			<a href="{{getLink}}" class="">{{fileName}}</a>
+			<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a>
+		</div>
+	</li>
+</script>
+
 
 <script>
 	var now = new Date();
@@ -223,7 +240,6 @@
 	
 	/* regTimestamp 포매팅 */
 	function timeFormat(milliseconds) {
-		console.log(milliseconds);
 		var time = new Date(milliseconds);
 		var year = time.getFullYear();
 		var month = (time.getMonth() + 1).toString();
@@ -308,6 +324,9 @@
 			$(".completedList").after(html);
 		});
 	}
+	$("#completedModal").on("hidden.bs.modal", function() {
+		$(".attachment").remove();
+	});
 
 
 	/*당일 추가된 리스트 모달 창 처리 */	
@@ -320,10 +339,13 @@
 			$(".description").html(data.description);
 			$(".regTimestamp").html(timeFormat(data.regTimestamp));
 		});
+		
+		getAttach(listNumber);
 	});
 	$("#uncompletedModal").on("hidden.bs.modal", function() {
 		$(".description").show();
 		$(".EditWindow").hide();
+		$(".attachment").remove();
 	});
 	
 	/* 미완료 리스트 모달 창 처리 */
@@ -336,6 +358,8 @@
 			$(".description").html(data.description);
 			$(".regTimestamp").html(timeFormat(data.regTimestamp));
 		});
+		
+		getAttach(listNumber);
 	});
 	
 	/* 당일 완료된 리스트 모달창 처리 */
@@ -347,17 +371,27 @@
 			$(".modal-header").attr("data-ln", data.listNumber);
 			$(".modal_title").html(data.title);
 			$(".description").html(data.description);
-			console.log("json" + data.completedTimestamp);
 			displayDate = "Registered date " + timeFormat(data.regTimestamp) 
 							+ "<br>Completed date " + timeFormat(data.completedTimestamp);
 			$(".regTimestamp").html(displayDate);
 		});
+		
+		getAttach(listNumber);
 	});
 	
 	/* 첨부파일 조회 */
 	function getAttach(listNumber) {
-		$.getJSON("/list/getAttach/" + listNumber, function(data) {
+		$.getJSON("/list/getAttach/" + listNumber, function(list) {
+			if(list.length == 0) {
+				return;
+			}
 			
+			var template = Handlebars.compile($("#attachTemplate").html());
+			$(list).each(function() {
+				var fileInfo = getFileInfo(this);
+				var html = template(fileInfo);
+				$(".attachList").append(html);
+			});
 		});
 	}
 
@@ -493,7 +527,26 @@
 			},
 			success : function(result) {
 				if(result == "success") {
-					alert("success");
+					that.closest("li").remove();
+				}
+			}
+		});
+	});
+	
+	$("#uncompletedModal").on("click", ".delBtn", function(event) {
+		event.preventDefault();
+		
+		var that = $(this);
+		
+		$.ajax({
+			type : "post",
+			dataType : "text",
+			url : "/upload/deleteFile",
+			data : {
+				fileName : that.attr("href")
+			},
+			success : function(result) {
+				if(result == "success") {
 					that.closest("li").remove();
 				}
 			}
@@ -508,7 +561,6 @@
 		$(".uploadList .delBtn").each(function() {
 			files.push($(this).attr("href"));
 		});
-		console.log(files);
 		
 		$.ajax({
 			type : "post",
@@ -521,6 +573,8 @@
 				if(result == "success") {
 					$("#attachmentModal").modal("hide");
 					$(".uploadList li").remove();
+					$(".attachment").remove();
+					getAttach(listNumber);
 				}
 			}
 		});
