@@ -25,9 +25,12 @@
 
 <body>
 
-	<div style="height:100px; width:100%; font-size:50px; text-align:center; background-color:#337ab7; color:white;">
-		hello
+	
+	<div style="height:100px; width:100%; font-size:50px; text-align:center; background-color:#337ab7;">
+		<a href="/" style="decoration:none; color:white;">hello</a>
 	</div>
+	
+	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -49,13 +52,13 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown<span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> user name<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">Link1</a></li>
 							<li><a href="#">Link2</a></li>
 							<li><a href="#">Link3</a></li>
 							<li class="divider"></li>
-							<li><a href="#">Link4</a></li>
+							<li><a href="#">Sign out</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -103,10 +106,17 @@
 			<div class="panel-body">
 				<div class="list-group">
 					<div class="totalList">				
-					</div>
-					
+					</div>			
+				</div>
+				
+				<button type="button" class="btn btn-default showInputBtn">ADD 
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+				
+				<div class="listInput" style="display:none;">
 					<input type="text" id="title">
-					<button type="button" id="listAddBtn">ADD</button>
+					<button type="button" class="btn btn-default" id="listAddBtn">ADD</button>
+					<button type="button" class="btn btn-default hideInputBtn">
+						<span class="glyphicon glyphicon-remove"></span></button>
 				</div>
 			</div>
 			
@@ -165,6 +175,7 @@
 					<div class="EditWindow" style="display:none">
 						<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
 						<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
+						<button type="button" class="btn btn-default btn-xs cancelBtn">Cancel</button>
 					</div>
 
 
@@ -268,12 +279,14 @@
 </body>
 </html>
 
-<!-- 리스트 템플릿 -->
+<!-- 당일 등록 리스트 템플릿 -->
 <script id="listTemplate" type="text/x-handlebars-template">
 {{#each .}}
 	<a data-ln={{listNumber}} class="list-group-item eachList" data-toggle="modal" data-target="#uncompletedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
-		<p class="list-group-item-text">{{editDescription description}}</p>
+		<p class="list-group-item-text">{{editDescription description}}</p> 
+		{{#isAttach attachCount}}
+		{{/isAttach}}
 	</a>
 {{/each}}
 </script>
@@ -284,6 +297,8 @@
 	<a data-ln={{listNumber}} class="list-group-item uncompletedEachList" data-toggle="modal" data-target="#uncompletedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
 		<p class="list-group-item-text">{{editDescription description}}</p>
+		{{#isAttach attachCount}}
+		{{/isAttach}}
 	</a>
 {{/each}}
 </script>
@@ -295,6 +310,15 @@
 		
 		return description.replace(/<br>/gi, " ");
 	});
+	
+	Handlebars.registerHelper("isAttach", function(attachCount) {
+		if(attachCount > 0) {
+			return new Handlebars.SafeString(
+					"<p><span class='glyphicon glyphicon-paperclip' aria-hidden='true'>" + attachCount + "</span></p>");
+		}
+		
+		return;
+	});
 </script>
 
 <!-- 완료된 리스트 템플릿 -->
@@ -303,6 +327,8 @@
 	<a data-ln={{listNumber}} class="list-group-item completedEachList" data-toggle="modal" data-target="#completedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
 		<p class="list-group-item-text">{{editDescription description}}</p>
+		{{#isAttach attachCount}}
+		{{/isAttach}}
 	</a>
 {{/each}}
 </script>
@@ -350,6 +376,17 @@
 					+ " " + (hours[1]? hours:"0"+hours[1]) + ":" + (minutes[1]? minutes:"0"+minutes[0]);
 	}
 
+	/* 리스트 인풋텍스트 보이기 */
+	$(".showInputBtn").on("click", function() {	
+		$(this).hide();
+		$(".listInput").show();
+	});
+	/* 리스트 인풋텍스트  감추기 */
+	$(".hideInputBtn").on("click", function() {
+		$(this).parent().hide();
+		$(".showInputBtn").show();
+	});
+	
 	/* 리스트 추가 처리 */
 	$("#listAddBtn").on("click", function(event) {
 		event.preventDefault();
@@ -445,6 +482,8 @@
 		$(".description").show();
 		$(".EditWindow").hide();
 		$(".attachment").remove();
+		getList();
+		getUncompletedList();
 	});
 	
 	/* 미완료 리스트 모달 창 처리 */
@@ -530,6 +569,11 @@
 				}
 			}
 		});
+	});
+	/* description Cancel 버튼 */
+	$(".cancelBtn").on("click", function() {
+		$(".description").show();
+		$(".EditWindow").hide();
 	});
 	
 	/* 개별 리스트 완료 처리 */
@@ -640,6 +684,7 @@
 	$("#uncompletedModal").on("click", ".delBtn", function(event) {
 		event.preventDefault();
 		
+		var listNumber = $("#uncompletedModal .modal-header").attr("data-ln");
 		var that = $(this);
 		
 		$.ajax({
@@ -647,7 +692,8 @@
 			dataType : "text",
 			url : "/upload/deleteFile",
 			data : {
-				fileName : that.attr("href")
+				fileName : that.attr("href"),
+				listNUmber : listNumber			// 첨부파일 카운트 업데이트용
 			},
 			success : function(result) {
 				if(result == "success") {

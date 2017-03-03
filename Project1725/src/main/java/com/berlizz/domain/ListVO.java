@@ -12,7 +12,9 @@ public class ListVO {
 	private String regDate;
 	private Boolean completed;
 	private Date completedTimestamp;
-	
+	private Integer attachCount;
+
+
 	@Override
 	public String toString() {
 		return "ListVO : [listNumber = " + listNumber + "]";
@@ -80,6 +82,14 @@ public class ListVO {
 
 	public void setCompletedTimestamp(Date completedTimestamp) {
 		this.completedTimestamp = completedTimestamp;
+	}
+	
+	public Integer getAttachCount() {
+		return attachCount;
+	}
+
+	public void setAttachCount(Integer attachCount) {
+		this.attachCount = attachCount;
 	}
 	
 	

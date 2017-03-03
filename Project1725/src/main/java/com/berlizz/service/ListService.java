@@ -28,5 +28,7 @@ public interface ListService {
 	
 	public List<String> getAttach(Integer listNumber) throws Exception;
 	
-	public void deleteAttach(String fullName) throws Exception;
+	public void deleteAttach(String fullName, Integer listNumber) throws Exception;
+	
+
 }

@@ -82,4 +82,13 @@ public class ListDAOImpl implements ListDAO {
 	public void deleteAttach(String fullName) throws Exception {
 		session.delete(namespace + ".deleteAttach", fullName);
 	}
+	
+	@Override
+	public void updateAttachCount(Integer variation, Integer listNumber) throws Exception {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("variation", variation);
+		map.put("listNumber", listNumber);
+		
+		session.update(namespace + ".updateAttachCount", map);
+	}
 }

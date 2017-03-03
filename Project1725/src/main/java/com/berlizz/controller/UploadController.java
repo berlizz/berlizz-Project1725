@@ -86,12 +86,12 @@ public class UploadController {
 	}
 	
 	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
-	public ResponseEntity<String> deleteFile(String fileName) {
+	public ResponseEntity<String> deleteFile(String fileName, Integer listNumber) {
 		logger.info("deleteFile()");
 		
 		ResponseEntity<String> entity = null;
 		try {
-			service.deleteAttach(fileName);
+			service.deleteAttach(fileName, listNumber);
 			
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 			MediaType mediaType = MediaUtils.getMediaType(formatName);

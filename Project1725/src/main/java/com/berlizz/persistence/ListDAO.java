@@ -30,4 +30,6 @@ public interface ListDAO {
 	
 	public void deleteAttach(String fullName) throws Exception;
 	
+	public void updateAttachCount(Integer variation, Integer listNumber) throws Exception;
+	
 }

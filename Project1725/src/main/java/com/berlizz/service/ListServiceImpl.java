@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.berlizz.domain.ListVO;
 import com.berlizz.persistence.ListDAO;
@@ -60,9 +61,11 @@ public class ListServiceImpl implements ListService {
 		dao.deleteList(listNumber);
 	}
 	
+	@Transactional
 	@Override
 	public void addAttach(String fullName, Integer listNumber) throws Exception {
 		dao.addAttach(fullName, listNumber);
+		dao.updateAttachCount(1, listNumber);
 	}
 	
 	@Override
@@ -70,9 +73,15 @@ public class ListServiceImpl implements ListService {
 		return dao.getAttach(listNumber);
 	}
 	
+	@Transactional
 	@Override
-	public void deleteAttach(String fullName) throws Exception {
+	public void deleteAttach(String fullName, Integer listNumber) throws Exception {
 		dao.deleteAttach(fullName);
+		
+		if(listNumber != null) {
+			dao.updateAttachCount((-1), listNumber);
+		}
 	}
+	
 
 }
