@@ -22,24 +22,112 @@
 </style>
 
 </head>
+
 <body>
 
-	<div class="col-md-3">
-		<ul class="uncompletedList">
-		</ul>
+	<div style="height:100px; width:100%; font-size:50px; text-align:center; background-color:#337ab7; color:white;">
+		hello
+	</div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"></a>
+			</div>
+			
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Link1 <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">Link2</a></li>
+					<li><a href="#">Link3</a></li>
+					<li><a href="#">Link4</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Link1</a></li>
+							<li><a href="#">Link2</a></li>
+							<li><a href="#">Link3</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Link4</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="col-md-3 col-xs-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Reversed List</h3>
+			</div>
+			
+			<div class="panel-body">
+				<div class="list-group">
+				</div>
+			</div>
+			
+		</div>
 	</div>
 
-	<div class="col-md-3">
-			<ul class="totalList">				
-			</ul>
+	<div class="col-md-3 col-xs-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Uncompleted List</h3>
+			</div>
 			
-			<input type="text" id="title">
-			<button type="button" id="listAddBtn">ADD</button>
+			<div class="panel-body">
+				<div class="list-group">
+					<div class="uncompletedList">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+
+	<div class="col-md-3 col-xs-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Added List</h3>
+			</div>
+			
+			<div class="panel-body">
+				<div class="list-group">
+					<div class="totalList">				
+					</div>
+					
+					<input type="text" id="title">
+					<button type="button" id="listAddBtn">ADD</button>
+				</div>
+			</div>
+			
+		</div>
+			
 	</div>
 	
-	<div class="col-md-3">
-		<ul class="completedList">
-		</ul>
+	<div class="col-md-3 col-xs-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Completed List</h3>
+			</div>
+			
+			<div class="panel-body">
+				<div class="list-group">
+					<div class="completedList">
+					</div>
+				</div>
+			</div>
+			
+		</div>
 	</div>
 	
 	
@@ -66,28 +154,22 @@
 				
 				<div class="modal-body">
 					
-					<h4>Description <button type="button" class="btn btn-default btn-xs descriptionEdit">Edit</button></h4>
+					<h4>Description 
+						<button type="button" class="btn btn-default btn-xs descriptionEdit">Edit</button>
+						<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#attachmentModal">Attachment</button>
+					</h4>
 						
-					<div class="form-inline">	
-						<div class="form-group col-md-8">
-							<p class="description"></p>
-						
-							<div class="EditWindow" style="display:none">
-								<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
-								<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
-							</div>
-						</div>
 					
-					
-						<div class="form-group col-md-4">
-							<div class="list-group">
-								<a class="list-group-item" data-toggle="modal" href="#attachmentModal">hahaha</a>
-							</div>
-						</div>
+					<p class="description"></p>
+				
+					<div class="EditWindow" style="display:none">
+						<textarea name="description" id="editText" rows="10" style="resize:none; width:100%;">description</textarea>
+						<button type="button" class="btn btn-primary btn-xs editBtn">Save</button>
 					</div>
-					
-					<ul class="attachList">
-					</ul>
+
+
+					<div class="row attachList">
+					</div>
 					
 				</div>
 				
@@ -161,11 +243,10 @@
 					<div style="text-align:center;">
 						<label>File Drop Here</label>
 						<div class="fileDrop">
-						
 						</div>
-						<ul class="uploadList">
-							
-						</ul>
+						
+						<div class="row uploadList">
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -190,36 +271,54 @@
 <!-- 리스트 템플릿 -->
 <script id="listTemplate" type="text/x-handlebars-template">
 {{#each .}}
-	<li data-ln={{listNumber}} class="eachList" data-toggle="modal" data-target="#uncompletedModal">{{title}}
-	</li>
+	<a data-ln={{listNumber}} class="list-group-item eachList" data-toggle="modal" data-target="#uncompletedModal">
+		<h4 class="list-group-item-heading">{{title}}</h4>
+		<p class="list-group-item-text">{{editDescription description}}</p>
+	</a>
 {{/each}}
 </script>
 
 <!-- 미완료 리스트 템플릿 -->
 <script id="uncompletedListTemplate" type="text/x-handlebars-template">
 {{#each .}}
-	<li data-ln={{listNumber}} class="uncompletedEachList" data-toggle="modal" data-target="#uncompletedModal">{{title}}
-	</li>
+	<a data-ln={{listNumber}} class="list-group-item uncompletedEachList" data-toggle="modal" data-target="#uncompletedModal">
+		<h4 class="list-group-item-heading">{{title}}</h4>
+		<p class="list-group-item-text">{{editDescription description}}</p>
+	</a>
 {{/each}}
+</script>
+<script>
+	Handlebars.registerHelper("editDescription", function(description) {
+		if(description.length > 35) {
+			return description.substring(0, 35).replace(/<br>/gi, " ") + "...";	
+		}
+		
+		return description.replace(/<br>/gi, " ");
+	});
 </script>
 
 <!-- 완료된 리스트 템플릿 -->
 <script id="completedListTemplate" type="text/x-handlebars-template">
 {{#each .}}
-	<li data-ln={{listNumber}} class="completedEachList" data-toggle="modal" data-target="#completedModal">{{title}}
-	</li>
+	<a data-ln={{listNumber}} class="list-group-item completedEachList" data-toggle="modal" data-target="#completedModal">
+		<h4 class="list-group-item-heading">{{title}}</h4>
+		<p class="list-group-item-text">{{editDescription description}}</p>
+	</a>
 {{/each}}
 </script>
 
 <!-- 첨부파일 리스트 템플릿 -->
 <script id="attachTemplate" type="text/x-handlebars-template">
-	<li data-src="{{fullName}}" class="attachment">
-		<span class=""><img src="{{imgsrc}}" alt="attachment"></span>
-		<div class="">
-			<a href="{{getLink}}" class="">{{fileName}}</a>
-			<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a>
+	<div class="col-sm-6 col-md-4 attachment">
+		<div class="thumbnail" data-src="{{fullName}}">
+			<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a><br>
+			<img src="{{imgsrc}}" alt="attachment" style="height:100px;">
+			<div class="caption">
+				<h4><a href="{{getLink}}">{{fileName}}</a></h4>
+				<p></p>
+			</div>
 		</div>
-	</li>
+	</div>
 </script>
 
 
@@ -468,13 +567,16 @@
 
 <!-- 업로드 리스트 템플릿 -->
 <script id="uploadTemplate" type="text/x-handlebars-template">
-<li>
-	<span class="mailbox-attchment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-	<div class="mailbox-attchment-info">
-		<a href="{{getLink}}" class="mailbox-attchment-name">{{fileName}}</a>
-		<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a>
+	<div class="col-sm-6 col-md-4 attachment">
+		<div class="thumbnail" data-src="{{fullName}}">
+			<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn">X</a><br>
+			<img src="{{imgsrc}}" alt="attachment" style="height:100px;">
+			<div class="caption">
+				<h4><a href="{{getLink}}">{{fileName}}</a></h4>
+				<p></p>
+			</div>
+		</div>
 	</div>
-</li>
 </script>
 <script src="/resources/js/upload.js"></script>
 <script>
@@ -513,6 +615,7 @@
 		
 	});
 	
+	/* 업로드모달창 삭제버튼 이벤트 처리 */
 	$(".uploadList").on("click", ".delBtn", function(event) {
 		event.preventDefault();
 		
@@ -527,12 +630,13 @@
 			},
 			success : function(result) {
 				if(result == "success") {
-					that.closest("li").remove();
+					that.closest(".attachment").remove();
 				}
 			}
 		});
 	});
 	
+	/* 리스트 모달창 첨부파일 삭제버튼 이벤트 처리 */
 	$("#uncompletedModal").on("click", ".delBtn", function(event) {
 		event.preventDefault();
 		
@@ -547,7 +651,7 @@
 			},
 			success : function(result) {
 				if(result == "success") {
-					that.closest("li").remove();
+					that.closest(".attachment").remove();
 				}
 			}
 		});
