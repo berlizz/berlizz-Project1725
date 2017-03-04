@@ -166,7 +166,8 @@
 					
 					<h4>Description 
 						<button type="button" class="btn btn-default btn-xs descriptionEdit">Edit</button>
-						<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#attachmentModal">Attachment</button>
+						<button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#attachmentModal">
+							<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Attachment</button>
 					</h4>
 						
 					
@@ -180,6 +181,15 @@
 
 
 					<div class="row attachList">
+					</div>
+					
+					<div class="replyInput">
+						<label><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Reply</label><br>
+						<textarea name="replytext" id="replyText" rows="2" style="resize:none; width:90%;"></textarea>
+						<button type="button" class="btn btn-primary btn-xs addReplyBtn">Add</button>
+					</div>
+					
+					<div class="replyList">
 					</div>
 					
 				</div>
@@ -731,6 +741,9 @@
 	});
 
 </script>
+
+<!-- reply.js -->
+<script src="/resources/js/reply.js"></script>
 
 
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.berlizz.mapper.replyMapper">
+
+	<insert id="addReply">
+		insert into tbl_reply (listNumber, replytext, replyWriter)
+		values (#{listNumber}, #{replytext}, #{replyWriter})
+	</insert>
+	
+	<update id="updateReply">
+		update tbl_reply
+		set replytext = #{replytext}, updateDate = now()
+		where replyNumber = #{replyNumber}
+	</update>
+	
+	<delete id="deleteReply">
+		delete
+		from tbl_reply
+		where replyNumber = #{replyNumber}
+	</delete>
+	
+	<select id="selectReply" resultType="ReplyVO">
+		select *
+		from tbl_reply
+		where listNumber = #{listNumber}
+		order by replyNumber desc
+	</select>
+
+</mapper>

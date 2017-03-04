@@ -83,12 +83,6 @@
 		where fullName = #{fullName}
 	</delete>
 	
-	<select id="countAttach" resultType="Integer">
-		select attachCount
-		from tbl_list;
-		where listNumber = #{listNumber}
-	</select>
-	
 	<update id="updateAttachCount">
 		update tbl_list
 		set attachCount = attachCount + #{variation}
