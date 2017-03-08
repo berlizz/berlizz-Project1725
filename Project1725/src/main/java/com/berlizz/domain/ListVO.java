@@ -13,6 +13,7 @@ public class ListVO {
 	private Boolean completed;
 	private Date completedTimestamp;
 	private Integer attachCount;
+	private Integer replyCount;
 
 
 	@Override
@@ -91,7 +92,14 @@ public class ListVO {
 	public void setAttachCount(Integer attachCount) {
 		this.attachCount = attachCount;
 	}
-	
+
+	public Integer getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(Integer replyCount) {
+		this.replyCount = replyCount;
+	}
 	
 	
 }

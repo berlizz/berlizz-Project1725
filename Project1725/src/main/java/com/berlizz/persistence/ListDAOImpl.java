@@ -91,4 +91,13 @@ public class ListDAOImpl implements ListDAO {
 		
 		session.update(namespace + ".updateAttachCount", map);
 	}
+	
+	@Override
+	public void updateReplyCount(Integer variation, Integer listNumber) throws Exception {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("variation", variation);
+		map.put("listNumber", listNumber);
+		
+		session.update(namespace + ".updateReplyCount", map);
+	}
 }

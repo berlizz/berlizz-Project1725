@@ -12,7 +12,7 @@
 	</select>
 	
 	<select id="listSelect" resultType="ListVO">
-		select listNumber, title, writer, description, regTimestamp, regDate, attachCount
+		select listNumber, title, writer, description, regTimestamp, regDate, attachCount, replyCount
 		from tbl_list
 		where regDate = #{regDate} and completed = 0
 		order by regTimestamp desc
@@ -43,7 +43,7 @@
 	
 	<select id="uncompletedSelect" resultType="ListVO">
 		<![CDATA[
-			select listNumber, title, writer, description, regTimestamp, regDate, attachCount
+			select listNumber, title, writer, description, regTimestamp, regDate, attachCount, replyCount
 			from tbl_list
 			where regDate < curdate() and completed = 0
 			order by regTimestamp desc
@@ -52,7 +52,7 @@
 	
 	<select id="completedSelect" resultType="listVO">
 		<![CDATA[
-			select listNumber, title, writer, description, regTimestamp, completedTimestamp, attachCount
+			select listNumber, title, writer, description, regTimestamp, completedTimestamp, attachCount, replyCount
 			from tbl_list
 			where completedTimestamp > curdate() and completed = 1
 			order by regTimestamp desc
@@ -86,6 +86,12 @@
 	<update id="updateAttachCount">
 		update tbl_list
 		set attachCount = attachCount + #{variation}
+		where listNumber = #{listNumber}
+	</update>
+	
+	<update id="updateReplyCount">
+		update tbl_list
+		set replyCount = replyCount + #{variation}
 		where listNumber = #{listNumber}
 	</update>
 

@@ -32,4 +32,6 @@ public interface ListDAO {
 	
 	public void updateAttachCount(Integer variation, Integer listNumber) throws Exception;
 	
+	public void updateReplyCount(Integer variation, Integer listNumber) throws Exception;
+	
 }

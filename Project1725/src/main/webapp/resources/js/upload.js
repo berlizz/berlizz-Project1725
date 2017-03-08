@@ -11,7 +11,6 @@ function checkImageType(fileName) {
 
 
 function getFileInfo(fullName) {
-	console.log("getFileInfo==" + fullName);
 	var fileName, imgsrc, getLink, fileLink;
 	
 	if(checkImageType(fullName)) {

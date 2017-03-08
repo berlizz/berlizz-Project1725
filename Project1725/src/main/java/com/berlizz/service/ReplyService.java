@@ -12,6 +12,6 @@ public interface ReplyService {
 	
 	public List<ReplyVO> selectReply(Integer listNumber) throws Exception;
 	
-	public void deleteReply(Integer replyNumber) throws Exception;
+	public void deleteReply(Integer replyNumber, Integer listNumber) throws Exception;
 	
 }

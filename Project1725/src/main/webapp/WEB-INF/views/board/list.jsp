@@ -223,7 +223,7 @@
 	</div>
 	
 	<!-- completed list modal -->
-	<div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledly="completedModalLabel" aria-hidden="true">
+	<div class="modal" id="completedModal" tabindex="-1" role="dialog" aria-labelledly="completedModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				
@@ -238,8 +238,11 @@
 				<div class="modal-body">
 					<p class="description"></p>
 					
-					<ul class="attachList">
-					</ul>
+					<div class="row attachList">
+					</div>
+					
+					<div class="replyList">
+					</div>
 				</div>
 				
 				<div class="modal-footer">
@@ -294,9 +297,13 @@
 {{#each .}}
 	<a data-ln={{listNumber}} class="list-group-item eachList" data-toggle="modal" data-target="#uncompletedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
-		<p class="list-group-item-text">{{editDescription description}}</p> 
-		{{#isAttach attachCount}}
-		{{/isAttach}}
+		<p class="list-group-item-text">{{editDescription description}}</p>
+		<p>
+			{{#isAttach attachCount}}
+			{{/isAttach}}
+			{{#isReply replyCount}}
+			{{/isReply}}
+		</P>
 	</a>
 {{/each}}
 </script>
@@ -307,8 +314,12 @@
 	<a data-ln={{listNumber}} class="list-group-item uncompletedEachList" data-toggle="modal" data-target="#uncompletedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
 		<p class="list-group-item-text">{{editDescription description}}</p>
-		{{#isAttach attachCount}}
-		{{/isAttach}}
+		<p>
+			{{#isAttach attachCount}}
+			{{/isAttach}}
+			{{#isReply replyCount}}
+			{{/isReply}}
+		</P>
 	</a>
 {{/each}}
 </script>
@@ -324,7 +335,7 @@
 	Handlebars.registerHelper("isAttach", function(attachCount) {
 		if(attachCount > 0) {
 			return new Handlebars.SafeString(
-					"<p><span class='glyphicon glyphicon-paperclip' aria-hidden='true'>" + attachCount + "</span></p>");
+					"<span class='glyphicon glyphicon-paperclip' aria-hidden='true'>" + attachCount + "</span>&nbsp;&nbsp;");
 		}
 		
 		return;
@@ -337,8 +348,12 @@
 	<a data-ln={{listNumber}} class="list-group-item completedEachList" data-toggle="modal" data-target="#completedModal">
 		<h4 class="list-group-item-heading">{{title}}</h4>
 		<p class="list-group-item-text">{{editDescription description}}</p>
-		{{#isAttach attachCount}}
-		{{/isAttach}}
+		<p>
+			{{#isAttach attachCount}}
+			{{/isAttach}}
+			{{#isReply replyCount}}
+			{{/isReply}}
+		</P>
 	</a>
 {{/each}}
 </script>
@@ -474,6 +489,14 @@
 		$(".attachment").remove();
 	});
 
+	/* 모달창 닫기 옵션 */
+	$("#uncompletedModal").on("hidden.bs.modal", function() {
+		$(".description").show();
+		$(".EditWindow").hide();
+		$(".attachment").remove();
+		getList();
+		getUncompletedList();
+	});
 
 	/*당일 추가된 리스트 모달 창 처리 */	
 	$(document).on("click", ".eachList", function() {
@@ -487,13 +510,7 @@
 		});
 		
 		getAttach(listNumber);
-	});
-	$("#uncompletedModal").on("hidden.bs.modal", function() {
-		$(".description").show();
-		$(".EditWindow").hide();
-		$(".attachment").remove();
-		getList();
-		getUncompletedList();
+		getReply(listNumber);
 	});
 	
 	/* 미완료 리스트 모달 창 처리 */
@@ -508,6 +525,7 @@
 		});
 		
 		getAttach(listNumber);
+		getReply(listNumber);
 	});
 	
 	/* 당일 완료된 리스트 모달창 처리 */
@@ -525,6 +543,7 @@
 		});
 		
 		getAttach(listNumber);
+		getReply(listNumber);
 	});
 	
 	/* 첨부파일 조회 */
@@ -703,7 +722,7 @@
 			url : "/upload/deleteFile",
 			data : {
 				fileName : that.attr("href"),
-				listNUmber : listNumber			// 첨부파일 카운트 업데이트용
+				listNumber : listNumber			// 첨부파일 카운트 업데이트용
 			},
 			success : function(result) {
 				if(result == "success") {
@@ -742,6 +761,40 @@
 
 </script>
 
+
+<!-- 리플라이 리스트 템플릿 -->
+<link href="/resources/css/timeline.css" rel="stylesheet" type="text/css" />
+<script id="replyTemplate" type="text/x-handlebars-template">
+{{#each .}}
+<div class="message-item" id="{{listNumber}}">
+	<div class="message-inner">
+		<div class="message-head clearfix">
+			<div class="avatar pull-left"><a href="#"><img src="/resources/images/avatar.png"></a></div>
+			<div class="user-detail">
+				<h5 class="handle">{{replyWriter}}</h5>
+				<div class="post-meta">
+					<div class="asker-meta">
+						<span class="qa-message-what"></span>
+						<span class="qa-message-when">
+							<span class="qa-message-when-data">{{replyTimeFormat regDate}}</span>
+						</span>
+						<span class="qa-message-who">
+							<span class="qa-message-who-pad">- </span>
+							<span class="qa-message-who-data"><a href="javascript:openEditor({{replyNumber}})">edit</a></span>
+							<span class="qa-message-who-pad">- </span>
+							<span class="qa-message-who-data"><a href="javascript:deleteReply({{replyNumber}}, {{listNumber}})">delete</a></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="qa-message-content reply-{{replyNumber}}">
+			{{replytext}}
+		</div>
+	</div>
+</div>
+{{/each}}
+</script>
 <!-- reply.js -->
 <script src="/resources/js/reply.js"></script>
 

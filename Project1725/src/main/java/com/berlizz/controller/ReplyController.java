@@ -47,7 +47,7 @@ public class ReplyController {
 	@RequestMapping(value = "/{replyNumber}", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateReply(@PathVariable("replyNumber") Integer replyNumber, @RequestBody ReplyVO vo) {
 		logger.info("updateReply()");
-		
+		logger.info("replytext==" + vo.getReplytext());
 		ResponseEntity<String> entity = null;
 		try {
 			service.updateReply(vo);
@@ -73,6 +73,23 @@ public class ReplyController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/{replyNumber}/{listNumber}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteReply(@PathVariable("replyNumber") Integer replyNumber, @PathVariable("listNumber") Integer listNumber) {
+		logger.info("deleteReply()");
+		
+		ResponseEntity<String> entity = null;
+		try {
+			service.deleteReply(replyNumber, listNumber);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 		}
 		
 		return entity;
