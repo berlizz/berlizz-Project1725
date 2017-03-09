@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>project1725</title>
 
 <link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -45,8 +45,8 @@
 			
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Link1 <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">Link2</a></li>
+					<li class="active"><a href="#">List <span class="sr-only">(current)</span></a></li>
+					<li><a href="/board/calendar">Calendar</a></li>
 					<li><a href="#">Link3</a></li>
 					<li><a href="#">Link4</a></li>
 				</ul>

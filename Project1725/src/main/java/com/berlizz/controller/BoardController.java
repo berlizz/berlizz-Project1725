@@ -1,7 +1,5 @@
 package com.berlizz.controller;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,26 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.berlizz.service.ListService;
-
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
-	@Inject
-	private ListService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void board(@RequestParam("year") int year, @RequestParam("month") int month, @RequestParam("date") int date, Model model) throws Exception {
-		logger.info("board()");
-		
-		/*String regDate = LocalDate.of(year, month, date).toString();
-		
-		List<ListVO> listVO = service.listSelect(regDate);
-		model.addAttribute("listVO", listVO);*/
+	public void list(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "date", required = false) Integer date, Model model) throws Exception {
+		logger.info("list()");
 		
 	}
+	
+	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
+	public void calendar() throws Exception {
+		logger.info("calendar()");
+		
+	}
+	
+	
 }
