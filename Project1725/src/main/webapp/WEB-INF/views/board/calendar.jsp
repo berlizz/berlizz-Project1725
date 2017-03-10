@@ -88,68 +88,68 @@
 				<th colspan="2">SAT</th>
 			</tr>
 			<tr class="col_0">
-				<td class="row_0"></td>
-				<td class="row_1"></td>
-				<td class="row_2"></td>
-				<td class="row_3"></td>
-				<td class="row_4"></td>
-				<td class="row_5"></td>
-				<td class="row_6"></td>
-				<td class="row_7"></td>
-				<td class="row_8"></td>
-				<td class="row_9"></td>
-				<td class="row_10"></td>
-				<td class="row_11"></td>
-				<td class="row_12"></td>
-				<td class="row_13"></td>
+				<td class="row_0">00</td>
+				<td class="row_1">01</td>
+				<td class="row_2">02</td>
+				<td class="row_3">03</td>
+				<td class="row_4">04</td>
+				<td class="row_5">05</td>
+				<td class="row_6">06</td>
+				<td class="row_7">07</td>
+				<td class="row_8">08</td>
+				<td class="row_9">09</td>
+				<td class="row_10">010</td>
+				<td class="row_11">011</td>
+				<td class="row_12">012</td>
+				<td class="row_13">013</td>
 			</tr>
 			<tr class="col_1">
-				<td class="row_0"></td>
-				<td class="row_1"></td>
-				<td class="row_2"></td>
-				<td class="row_3"></td>
-				<td class="row_4"></td>
-				<td class="row_5"></td>
-				<td class="row_6"></td>
-				<td class="row_7"></td>
-				<td class="row_8"></td>
-				<td class="row_9"></td>
-				<td class="row_10"></td>
-				<td class="row_11"></td>
-				<td class="row_12"></td>
-				<td class="row_13"></td>
+				<td class="row_0">10</td>
+				<td class="row_1">11</td>
+				<td class="row_2">12</td>
+				<td class="row_3">13</td>
+				<td class="row_4">14</td>
+				<td class="row_5">15</td>
+				<td class="row_6">16</td>
+				<td class="row_7">17</td>
+				<td class="row_8">18</td>
+				<td class="row_9">19</td>
+				<td class="row_10">110</td>
+				<td class="row_11">111</td>
+				<td class="row_12">112</td>
+				<td class="row_13">113</td>
 			</tr>
 			<tr class="col_2">
-				<td class="row_0"></td>
-				<td class="row_1"></td>
-				<td class="row_2"></td>
-				<td class="row_3"></td>
-				<td class="row_4"></td>
-				<td class="row_5"></td>
-				<td class="row_6"></td>
-				<td class="row_7"></td>
-				<td class="row_8"></td>
-				<td class="row_9"></td>
-				<td class="row_10"></td>
-				<td class="row_11"></td>
-				<td class="row_12"></td>
-				<td class="row_13"></td>
+				<td class="row_0">20</td>
+				<td class="row_1">21</td>
+				<td class="row_2">22</td>
+				<td class="row_3">23</td>
+				<td class="row_4">24</td>
+				<td class="row_5">25</td>
+				<td class="row_6">26</td>
+				<td class="row_7">27</td>
+				<td class="row_8">28</td>
+				<td class="row_9">29</td>
+				<td class="row_10">210</td>
+				<td class="row_11">211</td>
+				<td class="row_12">212</td>
+				<td class="row_13">213</td>
 			</tr>
 			<tr class="col_3">
-				<td class="row_0"></td>
-				<td class="row_1"></td>
-				<td class="row_2"></td>
-				<td class="row_3"></td>
-				<td class="row_4"></td>
-				<td class="row_5"></td>
-				<td class="row_6"></td>
-				<td class="row_7"></td>
-				<td class="row_8"></td>
-				<td class="row_9"></td>
-				<td class="row_10"></td>
-				<td class="row_11"></td>
-				<td class="row_12"></td>
-				<td class="row_13"></td>
+				<td class="row_0">30</td>
+				<td class="row_1">31</td>
+				<td class="row_2">32</td>
+				<td class="row_3">33</td>
+				<td class="row_4">34</td>
+				<td class="row_5">35</td>
+				<td class="row_6">36</td>
+				<td class="row_7">37</td>
+				<td class="row_8">38</td>
+				<td class="row_9">39</td>
+				<td class="row_10">310</td>
+				<td class="row_11">311</td>
+				<td class="row_12">312</td>
+				<td class="row_13">313</td>
 			</tr>
 			<tr class="col_4">
 				<td class="row_0"></td>
@@ -297,6 +297,10 @@
 		text-align:center;
 		border:2px solid #95a5a6;
 		width:5em;
+	}
+	td {
+		width:5em;
+		height:2em;
 	}
 	.col_1, .col_3, .col_5, .col_7, .col_9, .col_11 {
 		border-bottom:2px solid #95a5a6;

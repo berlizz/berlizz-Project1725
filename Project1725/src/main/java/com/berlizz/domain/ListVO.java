@@ -12,6 +12,7 @@ public class ListVO {
 	private String regDate;
 	private Boolean completed;
 	private Date completedTimestamp;
+	private String completedDate;
 	private Integer attachCount;
 	private Integer replyCount;
 
@@ -100,6 +101,16 @@ public class ListVO {
 	public void setReplyCount(Integer replyCount) {
 		this.replyCount = replyCount;
 	}
+
+	public String getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(String completedDate) {
+		this.completedDate = completedDate;
+	}
+	
+	
 	
 	
 }

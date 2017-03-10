@@ -61,7 +61,7 @@
 	
 	<update id="completionUpdate">
 		update tbl_list
-		set completed = 1, completedTimestamp = now()
+		set completed = 1, completedTimestamp = now(), completedDate = curdate()
 		where listNumber = #{listNumber}
 	</update>
 	
