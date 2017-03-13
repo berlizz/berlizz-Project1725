@@ -27,5 +27,11 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping(value = "/archive", method = RequestMethod.GET)
+	public void archive() throws Exception {
+		logger.info("archive()");
+		
+	}
+	
 	
 }

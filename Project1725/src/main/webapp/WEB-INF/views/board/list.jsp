@@ -47,7 +47,7 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">List <span class="sr-only">(current)</span></a></li>
 					<li><a href="/board/calendar">Calendar</a></li>
-					<li><a href="#">Link3</a></li>
+					<li><a href="/board/archive">Archive</a></li>
 					<li><a href="#">Link4</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
