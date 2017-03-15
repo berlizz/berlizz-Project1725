@@ -64,16 +64,17 @@
 				<button type="button" class="btn btn-primary" id="searchBtn"><span class="glyphicon glyphicon-search"></span> search</button>
 			</div>
 			<div class="form-group pull-right">
-				<select>
-					<option>10 per page</option>
-					<option>20 per page</option>
-					<option>50 per page</option>
+				<select class="perPageNum">
+					<option value="10" selected="selected">10 per page</option>
+					<option value="20">20 per page</option>
+					<option value="50">50 per page</option>
 				</select>
 			</div>
 		</div>
 		
 		<div class="table-responsive">
 			<table class="table table-hover">
+				<tbody class="tableBody">
 				<tr>
 					<th>number</th>
 					<th>title</th>
@@ -82,8 +83,29 @@
 					<th>completed</th>
 					<th>etc</th>
 				</tr>
+				
+				<script id="archiveTemplate" type="text/x-handlebars-template">
+				{{#each .}}
+				<tr class="appended">
+					<td>{{listNumber}}</td>
+					<td>{{title}}</td>
+					<td>{{regTimestamp}}</td>
+					<td>{{completedTimestamp}}</td>
+					<td>{{completed}}</td>
+					<td>{{replyCount}}</td>
+				</tr>
+				{{/each}}
+				</script>
+				
+				</tbody>
 			</table>
 		</div>
+		
+		<div style="text-align:center;">
+			<ul class="pagination">
+			</ul>
+		</div>
+		
 	</div>
 	
 
@@ -95,6 +117,7 @@
 	}
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 <script src="/resources/jquery/jquery-3.1.1.min.js"></script>
 <script src="/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 <script src="/resources/js/archive.js"></script>

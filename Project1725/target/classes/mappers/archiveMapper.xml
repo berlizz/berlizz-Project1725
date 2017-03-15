@@ -10,5 +10,26 @@
 		from tbl_list
 		order by regTimestamp desc
 	</select>
+	
+	<select id="selectListPage" resultType="ListVO">
+		select *
+		from tbl_list
+		where writer = 'tester'
+		order by regTimestamp desc
+		limit #{page}, #{perPageNum}
+	</select>
+	
+	<select id="listTotalNumber" resultType="Integer">
+		select count(listNumber)
+		from tbl_list
+		where writer = 'tester'
+	</select>
+	
+	<select id="searchList" resultType="ListVO">
+		select *
+		from tbl_list
+		where title like concat('%', #{keyword}, '%')
+		order by regTimestamp desc
+	</select>
 
 </mapper>

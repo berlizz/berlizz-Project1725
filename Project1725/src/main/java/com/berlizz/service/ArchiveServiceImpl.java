@@ -19,5 +19,22 @@ public class ArchiveServiceImpl implements ArchiveService {
 	public List<ListVO> selectList() throws Exception {
 		return dao.selectList();
 	}
+	
+	@Override
+	public List<ListVO> selectListPage(Integer page, Integer perPageNum) throws Exception {
+		page = (page - 1) * perPageNum;
+		
+		return dao.selectListPage(page, perPageNum);
+	}
+	
+	@Override
+	public int listTotalNumber() throws Exception {
+		return dao.listTotalNumber();
+	}
+	
+	@Override
+	public List<ListVO> searchList(String keyword) throws Exception {
+		return dao.searchList(keyword);
+	}
 
 }
