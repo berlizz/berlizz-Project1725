@@ -44,12 +44,15 @@ public class ArchiveController {
 	}
 	
 	@RequestMapping(value = "/{page}/{perPageNum}", method = RequestMethod.GET)
-	public ResponseEntity<List<ListVO>> selectListPage(@PathVariable("page") Integer page, @PathVariable("perPageNum") Integer perPageNum) throws Exception {
+	public ResponseEntity<List<ListVO>> selectListPage(
+			@PathVariable("page") Integer page, 
+			@PathVariable("perPageNum") Integer perPageNum,
+			@RequestParam(value = "keyword", required = false) String keyword) throws Exception {
 		logger.info("selectListPage()");
 		ResponseEntity<List<ListVO>> entity = null;
 		
 		try {
-			List<ListVO> list = service.selectListPage(page, perPageNum);
+			List<ListVO> list = service.selectListPage(page, perPageNum, keyword);
 			entity = new ResponseEntity<>(list, HttpStatus.OK);
 			
 		} catch (Exception e) {

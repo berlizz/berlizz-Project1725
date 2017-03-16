@@ -15,8 +15,11 @@
 		select *
 		from tbl_list
 		where writer = 'tester'
+		<if test="keywordMap != null">
+			and title like concat('%', #{keywordMap.keyword}, '%')
+		</if>
 		order by regTimestamp desc
-		limit #{page}, #{perPageNum}
+		limit #{pageMap.page}, #{pageMap.perPageNum}
 	</select>
 	
 	<select id="listTotalNumber" resultType="Integer">

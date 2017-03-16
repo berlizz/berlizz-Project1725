@@ -6,20 +6,23 @@
 
 var page = 1, perPageNum = 10;	// 현재 페이지, 페이지당 갯수
 var listTotalNumber;			// 전체 리스트 총 갯수
+var keyword = "";				// 검색 키워드
 
 $(document).ready(function() {
-	getList(page, perPageNum);
+	getList(page, perPageNum, keyword);
 });
 
 /* 리스트 가져와서 테이블에 삽입 */
-function getList(page, perPageNum) {
+function getList(page, perPageNum, keyword) {
+	
+	console.log(page, perPageNum, keyword);
 	
 	/* 리스트 총 갯수 가져오기 */
-	$.getJSON("/archive/listTotalNumber", function(data) {
+	$.getJSON("/archive/listTotalNumber?", function(data) {
 		listTotalNumber = data;
 	});
 	
-	$.getJSON("/archive/" + page + "/" + perPageNum, function(list) {
+	$.getJSON("/archive/" + page + "/" + perPageNum + "?keyword=" + keyword, function(list) {
 		var template = Handlebars.compile($("#archiveTemplate").html());
 		var html = template(list);
 		$(".appended").remove();
@@ -68,36 +71,29 @@ $(document).on("click", ".pagination li a", function(event) {
 	
 	page = $(this).attr("href");
 	
-	getList(page, perPageNum);
+	getList(page, perPageNum, keyword);
 });
 
-/* 페이지 당 목록 갯수 select 이벤트 처리 */
+/* 페이지 당 목록 갯수 select list 변경 이벤트 처리 */
 $(".perPageNum").change(function() {
 	perPageNum = $(".perPageNum option:selected").val();
 	
-	getList(page, perPageNum);
+	getList(page, perPageNum, keyword);
 });
 
 /* 검색 버튼 이벤트 처리 */
 $("#searchBtn").on("click", function() {
-	var keyword = $("#keyword").val();
+	keyword = $("#keyword").val();
+	page = 1;
+	perPageNum = 10;
 	
-	getSearchList(keyword);
+	//getSearchList(keyword);
+	getList(page, perPageNum, keyword);
 });
 
 /* 키워드로 검색된 리스트 가져오기 */
+/*
 function getSearchList(keyword) {
-	/*$.ajax({
-		url : "/archive/search/",
-		type : "post",
-		dataType : "text",
-		data : {
-			keyword : keyword
-		},
-		success : function(list) {
-			console.log("size : " + list.size);
-		}
-	});*/
 	$.post("/archive/search", {keyword : keyword}, function(list) {
 		console.log("length : " + list.length);
 		var template = Handlebars.compile($("#archiveTemplate").html());
@@ -110,4 +106,4 @@ function getSearchList(keyword) {
 	
 	
 }
-
+*/
