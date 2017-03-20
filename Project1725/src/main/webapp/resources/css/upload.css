@@ -1,0 +1,11 @@
+/* 파일 업로드 창 스타일  */
+@CHARSET "UTF-8";
+
+
+.fileDrop {
+	width: 80%;
+	height: 100px;
+	border: 1px dotted gray;
+	background-color: lightslategrey;
+	margin: auto;
+}

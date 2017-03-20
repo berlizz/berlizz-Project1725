@@ -26,13 +26,9 @@
 		select count(listNumber)
 		from tbl_list
 		where writer = 'tester'
-	</select>
-	
-	<select id="searchList" resultType="ListVO">
-		select *
-		from tbl_list
-		where title like concat('%', #{keyword}, '%')
-		order by regTimestamp desc
+		<if test="keyword != null">
+			and title like concat('%', #{keyword}, '%');
+		</if>
 	</select>
 
 </mapper>

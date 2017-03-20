@@ -28,13 +28,8 @@ public class ArchiveServiceImpl implements ArchiveService {
 	}
 	
 	@Override
-	public int listTotalNumber() throws Exception {
-		return dao.listTotalNumber();
-	}
-	
-	@Override
-	public List<ListVO> searchList(String keyword) throws Exception {
-		return dao.searchList(keyword);
+	public int listTotalNumber(String keyword) throws Exception {
+		return dao.listTotalNumber(keyword);
 	}
 
 }

@@ -41,6 +41,10 @@ function getReply(listNumber) {
 
 /* 리플라이 등록 시간 포맷 */
 Handlebars.registerHelper("replyTimeFormat", function(regDate) {
+	if(regDate == null) {
+		return;
+	}
+	
 	var time = new Date(regDate);
 	var year = time.getFullYear();
 	var month = (time.getMonth() + 1).toString();
@@ -75,7 +79,6 @@ function deleteReply(replyNumber, listNumber) {
 		success : function(data) {
 			if(data == "success") {
 				getReply(listNumber);
-				alert("success");
 			}
 		}
 	});
@@ -118,7 +121,6 @@ $(".replyList").on("click", "#editReplyBtn", function() {
 		}),
 		success : function(data) {
 			if(data == "success") {
-				alert("success");
 				that.parent().html(replyText);
 			}
 		}

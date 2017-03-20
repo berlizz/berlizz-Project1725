@@ -1,0 +1,24 @@
+/* 아카이브 페이지 css */
+@CHARSET "UTF-8";
+
+
+.archive {
+	padding-left : 2%;
+	padding-right : 2%;
+}
+
+th {
+	text-align : center;
+}
+
+.listNumber, .time, .isCompleted, .etc {
+	text-align : center;
+}
+
+tr .true {
+	color : green;
+}
+
+tr .false {
+	color : red;
+}

@@ -10,7 +10,6 @@ public interface ArchiveService {
 	
 	public List<ListVO> selectListPage(Integer page, Integer perPageNum, String keyword) throws Exception;
 	
-	public int listTotalNumber() throws Exception;
+	public int listTotalNumber(String keyword) throws Exception;
 	
-	public List<ListVO> searchList(String keyword) throws Exception;
 }

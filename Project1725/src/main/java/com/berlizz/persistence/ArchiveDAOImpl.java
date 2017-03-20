@@ -44,13 +44,10 @@ public class ArchiveDAOImpl implements ArchiveDAO {
 	}
 	
 	@Override
-	public int listTotalNumber() throws Exception {
-		return session.selectOne(namespace + ".listTotalNumber");
-	}
-	
-	@Override
-	public List<ListVO> searchList(String keyword) throws Exception {
-		return session.selectList(namespace + ".searchList", keyword);
+	public int listTotalNumber(String keyword) throws Exception {
+		Map<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		return session.selectOne(namespace + ".listTotalNumber", map);
 	}
 
 }

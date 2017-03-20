@@ -64,12 +64,21 @@ public class ArchiveController {
 	}
 	
 	@RequestMapping(value = "/listTotalNumber", method = RequestMethod.GET)
-	public ResponseEntity<String> listTotalNumber() throws Exception {
+	public ResponseEntity<String> listTotalNumber(
+			@RequestParam(value = "keyword", required = false) String keyword) throws Exception {
 		logger.info("listTotalNumber()");
 		ResponseEntity<String> entity = null;
 		
+		logger.info("keyword : " + keyword);
+		if(keyword.equals("")) {
+			keyword = null;
+		}
+		
 		try {
-			int listTotalNumber = service.listTotalNumber();
+			int listTotalNumber = service.listTotalNumber(keyword);
+			
+			logger.info("number : " + listTotalNumber);
+			
 			entity = new ResponseEntity<>(String.valueOf(listTotalNumber), HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -80,20 +89,4 @@ public class ArchiveController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ResponseEntity<List<ListVO>> searchList(@RequestParam("keyword") String keyword) throws Exception {
-		logger.info("searchList()");
-		logger.info("keyword : " + keyword);
-		ResponseEntity<List<ListVO>> entity = null;
-		
-		try {
-			List<ListVO> list = service.searchList(keyword);
-			entity = new ResponseEntity<>(list, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		return entity;
-	}
 }
