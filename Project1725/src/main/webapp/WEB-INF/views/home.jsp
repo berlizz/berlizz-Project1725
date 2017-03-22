@@ -17,6 +17,16 @@
 		<h1><a id="enter" href="">Enter</a></h1>
 	</div>
 	
+	<form action="/user/signIn" method="post">
+		<input type="text" name="userId" id="userId" placeholder="ID">
+		<input type="password" name="userPw" id="userPw" placeholder="PASSWORD">
+		<label>
+			<input type="checkbox" name="useCookie">Remember Me
+		</label>
+		
+		<button type="submit" id="signInBtn">Sign In</button>
+	</form>
+	
 </body>
 <script src="/resources/jquery/jquery-3.1.1.min.js"></script>
 </html>
@@ -32,4 +42,23 @@
 		
 		self.location = "/board/list?year=" + year + "&month=" + month + "&date=" + date;
 	});
+	
+	$("#signInBtn").click(function(event) {
+		if($("#userId").val() == "") {
+			alert("아이디를 입력하세요");
+			$("#userId").focus();
+			event.preventDefault();
+			
+			return;
+		}
+		if($("#userPw").val() == "") {
+			alert("비밀번호를 입력하세요");
+			$("#userPw").focus();
+			event.preventDefault();
+			
+			return;
+		}
+		
+		
+	})
 </script>

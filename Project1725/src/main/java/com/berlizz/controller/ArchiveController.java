@@ -69,16 +69,12 @@ public class ArchiveController {
 		logger.info("listTotalNumber()");
 		ResponseEntity<String> entity = null;
 		
-		logger.info("keyword : " + keyword);
 		if(keyword.equals("")) {
 			keyword = null;
 		}
 		
 		try {
 			int listTotalNumber = service.listTotalNumber(keyword);
-			
-			logger.info("number : " + listTotalNumber);
-			
 			entity = new ResponseEntity<>(String.valueOf(listTotalNumber), HttpStatus.OK);
 			
 		} catch (Exception e) {

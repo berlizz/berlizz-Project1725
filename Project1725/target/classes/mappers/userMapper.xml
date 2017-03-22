@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.berlizz.mapper.UserMapper">
+
+	<select id="signin" resultType="UserVO">
+		select *
+		from tbl_user
+		where userId = #{userId} and userPw = #{userPw}
+	</select>
+	
+	<update id="keepSignIn">
+		update tbl_user 
+		set sessionKey = #{sessionId}, sessionLimit = #{sessionLimit}
+		where userId = #{userId}
+	</update>
+	
+	<select id="checkUserWithSessionKey" resultType="UserVO">
+		select *
+		from tbl_user
+		where sessionKey = #{sessionKey} and sessionLimit > now()
+	</select>
+
+</mapper>

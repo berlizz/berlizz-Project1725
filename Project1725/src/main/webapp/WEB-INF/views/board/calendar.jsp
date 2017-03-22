@@ -47,7 +47,7 @@
 							<li><a href="#">Link2</a></li>
 							<li><a href="#">Link3</a></li>
 							<li class="divider"></li>
-							<li><a href="#">Sign out</a></li>
+							<li><a href="/user/signOut">Sign out</a></li>
 						</ul>
 					</li>
 				</ul>
