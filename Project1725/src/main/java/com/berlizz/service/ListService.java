@@ -3,18 +3,19 @@ package com.berlizz.service;
 import java.util.List;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 
 public interface ListService {
 
 	public List<ListVO> listAll() throws Exception;
 	
-	public List<ListVO> listSelect(String regDate) throws Exception;
+	public List<ListVO> listSelect(String regDate, UserVO vo) throws Exception;
 	
 	public ListVO listSelectOne(Integer listNumber) throws Exception;
 	
-	public List<ListVO> uncompletedSelect() throws Exception;
+	public List<ListVO> uncompletedSelect(UserVO vo) throws Exception;
 	
-	public List<ListVO> completedSelect() throws Exception;
+	public List<ListVO> completedSelect(UserVO vo) throws Exception;
 	
 	public void createList(ListVO vo) throws Exception;
 	

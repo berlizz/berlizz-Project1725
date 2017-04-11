@@ -12,21 +12,50 @@ $(document).ready(function() {
 	getArchiveList(page, perPageNum, keyword);
 });
 
-/* 리스트 가져와서 테이블에 삽입 */
+/* 리스트 가져오기 */
 function getArchiveList(page, perPageNum, keyword) {
 	
+	var userId = $("#userId").val();
+	
 	/* 리스트 총 갯수 가져오기 */
-	$.getJSON("/archive/listTotalNumber?keyword=" + keyword, function(data) {
-		listTotalNumber = data;
+	$.ajax({
+		type : "post",
+		url : "/archive/listTotalNumber?keyword=" + keyword,
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(data) {
+			listTotalNumber = data;
+		}
 	});
 	
-	$.getJSON("/archive/" + page + "/" + perPageNum + "?keyword=" + keyword, function(list) {
-		var template = Handlebars.compile($("#archiveTemplate").html());
-		var html = template(list);
-		$(".appended").remove();
-		$(".tableBody").append(html);
-		
-		pagination(page);
+	/* 리스트 가져와서 테이블에 삽입 */
+	$.ajax({
+		type : "post",
+		url : "/archive/" + page + "/" + perPageNum + "?keyword=" + keyword,
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(list) {
+			list = JSON.parse(list);
+			
+			var template = Handlebars.compile($("#archiveTemplate").html());
+			var html = template(list);
+			$(".appended").remove();
+			$(".tableBody").append(html);
+			
+			pagination(page);
+		} 
 	});
 }
 

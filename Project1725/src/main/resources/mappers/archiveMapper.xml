@@ -14,18 +14,18 @@
 	<select id="selectListPage" resultType="ListVO">
 		select *
 		from tbl_list
-		where writer = 'tester'
-		<if test="keywordMap != null">
-			and title like concat('%', #{keywordMap.keyword}, '%')
+		where userId = #{vo.userId}
+		<if test="keyword != null">
+			and title like concat('%', #{keyword}, '%')
 		</if>
 		order by regTimestamp desc
-		limit #{pageMap.page}, #{pageMap.perPageNum}
+		limit #{page}, #{perPageNum}
 	</select>
 	
 	<select id="listTotalNumber" resultType="Integer">
 		select count(listNumber)
 		from tbl_list
-		where writer = 'tester'
+		where userId = #{vo.userId}
 		<if test="keyword != null">
 			and title like concat('%', #{keyword}, '%');
 		</if>

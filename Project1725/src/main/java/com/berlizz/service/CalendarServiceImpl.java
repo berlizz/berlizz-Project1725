@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 import com.berlizz.persistence.CalendarDAO;
 
 @Service
@@ -17,7 +18,7 @@ public class CalendarServiceImpl implements CalendarService {
 	private CalendarDAO dao;
 	
 	@Override
-	public List<ListVO> selectMonthlyList(Integer year, Integer month) throws Exception {
+	public List<ListVO> selectMonthlyList(Integer year, Integer month, UserVO vo) throws Exception {
 		
 		LocalDate date = LocalDate.of(year, month, 1);
 		String firstDate = date.toString();
@@ -25,7 +26,7 @@ public class CalendarServiceImpl implements CalendarService {
 		date = LocalDate.of(year, month + 1, 1);
 		String lastDate = date.toString();
 		
-		return dao.selectMonthlyList(firstDate, lastDate);
+		return dao.selectMonthlyList(firstDate, lastDate, vo);
 	}
 
 }

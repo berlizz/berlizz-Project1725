@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 
 @Repository
 public class CalendarDAOImpl implements CalendarDAO {
@@ -20,11 +21,12 @@ public class CalendarDAOImpl implements CalendarDAO {
 	private static final String namespace = "com.berlizz.mapper.CalendarMapper";
 	
 	@Override
-	public List<ListVO> selectMonthlyList(String firstDate, String lastDate) throws Exception {
-		Map<String, String> map = new HashMap<>();
+	public List<ListVO> selectMonthlyList(String firstDate, String lastDate, UserVO vo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("firstDate", firstDate);
 		map.put("lastDate", lastDate);
+		map.put("vo", vo);
 		
 		return session.selectList(namespace + ".monthlyList", map);
 	}

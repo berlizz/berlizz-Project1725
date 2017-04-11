@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 
 @Repository
 public class ArchiveDAOImpl implements ArchiveDAO {
@@ -25,28 +26,22 @@ public class ArchiveDAOImpl implements ArchiveDAO {
 	}
 	
 	@Override
-	public List<ListVO> selectListPage(Integer page, Integer perPageNum, String keyword) throws Exception {
-		Map<String, Integer> pageMap = new HashMap<>();
-		pageMap.put("page", page);
-		pageMap.put("perPageNum", perPageNum);
-		
-		Map<String, Map> map = new HashMap<>();
-		map.put("pageMap", pageMap);
-		if(keyword != null) {
-			Map<String, String> keywordMap = new HashMap<>();
-			keywordMap.put("keyword", keyword);
-			map.put("keywordMap", keywordMap);
-		} else {
-			map.put("keywordMap", null);
-		}
+	public List<ListVO> selectListPage(Integer page, Integer perPageNum, String keyword, UserVO vo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("page", page);
+		map.put("perPageNum", perPageNum);
+		map.put("keyword", keyword);
+		map.put("vo", vo);
 		
 		return session.selectList(namespace + ".selectListPage", map);
 	}
 	
 	@Override
-	public int listTotalNumber(String keyword) throws Exception {
-		Map<String, String> map = new HashMap<>();
+	public int listTotalNumber(String keyword, UserVO vo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
 		map.put("keyword", keyword);
+		map.put("vo", vo);
+		
 		return session.selectOne(namespace + ".listTotalNumber", map);
 	}
 

@@ -79,9 +79,29 @@ function insertDate(year, month) {
 
 /* 월단위 리스트 조회 */
 function getMonthlyList(year, month, lastDate) {
-	$.getJSON("/calendar/" + year +"/" + month, function(list) {
-		countCompleted(list, lastDate);
-		countRegistered(list, month, lastDate);
+	
+	var userId = $("#userId").val();
+	
+	$.ajax({
+		type : "post",
+		url : "/calendar/" + year + "/" + month,
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(list) {
+			
+			console.log(list);
+			
+			list = JSON.parse(list);
+			
+			countCompleted(list, lastDate);
+			countRegistered(list, month, lastDate);
+		}
 	});
 }
 

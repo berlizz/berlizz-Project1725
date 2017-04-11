@@ -16,7 +16,7 @@ public class CommonExceptionAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView errorModelAndView(Exception e) {
-		logger.info(e.toString());
+		logger.info("errorModelAndView() " + e.toString());
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/error_common");

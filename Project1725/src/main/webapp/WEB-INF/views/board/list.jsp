@@ -45,7 +45,7 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> user name<span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> ${signIn.userName}<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">Link1</a></li>
 							<li><a href="#">Link2</a></li>
@@ -58,6 +58,11 @@
 			</div>
 		</div>
 	</nav>
+	
+	<%-- 사용자 이름, 아이디 저장 --%>
+	<input type="hidden" id="userName" value="${signIn.userName}">
+	<input type="hidden" id="userId" value="${signIn.userId}">
+	
 	
 	<div class="col-md-3 col-xs-6">
 		<div class="panel panel-primary">
@@ -88,7 +93,6 @@
 			
 		</div>
 	</div>
-
 
 	<div class="col-md-3 col-xs-6">
 		<div class="panel panel-primary">

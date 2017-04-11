@@ -9,8 +9,9 @@
 		<![CDATA[
 			select *
 			from tbl_list
-			where (regTimestamp >= #{firstDate} and regTimestamp < #{lastDate})
-					or (completedTimestamp >= #{firstDate} and completedTimestamp < #{lastDate})	
+			where ((regTimestamp >= #{firstDate} and regTimestamp < #{lastDate})
+					or (completedTimestamp >= #{firstDate} and completedTimestamp < #{lastDate}))
+					and (userId = #{vo.userId})
 		]]>
 	</select>
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 import com.berlizz.persistence.ListDAO;
 
 @Service
@@ -22,8 +23,8 @@ public class ListServiceImpl implements ListService {
 	}
 
 	@Override
-	public List<ListVO> listSelect(String regDate) throws Exception {
-		return dao.listSelect(regDate);
+	public List<ListVO> listSelect(String regDate, UserVO vo) throws Exception {
+		return dao.listSelect(regDate, vo);
 	}
 	
 	@Override
@@ -32,13 +33,13 @@ public class ListServiceImpl implements ListService {
 	}
 	
 	@Override
-	public List<ListVO> uncompletedSelect() throws Exception {
-		return dao.uncompletedSelect();
+	public List<ListVO> uncompletedSelect(UserVO vo) throws Exception {
+		return dao.uncompletedSelect(vo);
 	}
 	
 	@Override
-	public List<ListVO> completedSelect() throws Exception {
-		return dao.completedSelect();
+	public List<ListVO> completedSelect(UserVO vo) throws Exception {
+		return dao.completedSelect(vo);
 	}
 
 	@Override

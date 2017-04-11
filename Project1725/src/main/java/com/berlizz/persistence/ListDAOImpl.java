@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 
 @Repository
 public class ListDAOImpl implements ListDAO {
@@ -25,8 +26,12 @@ public class ListDAOImpl implements ListDAO {
 	}
 	
 	@Override
-	public List<ListVO> listSelect(String regDate) throws Exception {
-		return session.selectList(namespace + ".listSelect", regDate);
+	public List<ListVO> listSelect(String regDate, UserVO vo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("regDate", regDate);
+		map.put("vo", vo);
+		
+		return session.selectList(namespace + ".listSelect", map);
 	}
 	
 	@Override
@@ -35,13 +40,13 @@ public class ListDAOImpl implements ListDAO {
 	}
 	
 	@Override
-	public List<ListVO> uncompletedSelect() throws Exception {
-		return session.selectList(namespace + ".uncompletedSelect");
+	public List<ListVO> uncompletedSelect(UserVO vo) throws Exception {
+		return session.selectList(namespace + ".uncompletedSelect", vo);
 	}
 	
 	@Override
-	public List<ListVO> completedSelect() throws Exception {
-		return session.selectList(namespace + ".completedSelect");
+	public List<ListVO> completedSelect(UserVO vo) throws Exception {
+		return session.selectList(namespace + ".completedSelect", vo);
 	}
 	
 	@Override

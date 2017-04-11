@@ -15,6 +15,7 @@ public class ListVO {
 	private String completedDate;
 	private Integer attachCount;
 	private Integer replyCount;
+	private String userId;
 
 
 	@Override
@@ -108,6 +109,14 @@ public class ListVO {
 
 	public void setCompletedDate(String completedDate) {
 		this.completedDate = completedDate;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

@@ -25,7 +25,6 @@ var month = now.getMonth() + 1;
 var date = now.getDate();
 var regDate = year + "-" + month + "-" + date;
 
-var writer = "tester";
 
 /* regTimestamp 포매팅 */
 function timeFormat(milliseconds) {
@@ -55,6 +54,8 @@ $(".hideInputBtn").on("click", function() {
 $("#listAddBtn").on("click", function(event) {
 	event.preventDefault();
 	var title = $("#title").val();
+	var writer = $("#userName").val();
+	var userId = $("#userId").val();
 	
 	if(title == "") {
 		alert("input");
@@ -82,7 +83,8 @@ $("#listAddBtn").on("click", function(event) {
 			title : title,
 			writer : writer,
 			description : " ",
-			regDate : regDate
+			regDate : regDate,
+			userId : userId
 		}),
 		success : function(data) {
 			if(data == "success") {
@@ -95,11 +97,27 @@ $("#listAddBtn").on("click", function(event) {
 
 /* 당일 추가된 리스트 조회 */
 function getList() {		
-	$.getJSON("/list/" + regDate, function(list) {
-		var template = Handlebars.compile($("#listTemplate").html());
-		var html = template(list);
-		$(".eachList").remove();
-		$(".totalList").after(html);
+	var userId = $("#userId").val();
+	
+	$.ajax({
+		type : "post",
+		url : "/list/" + regDate,
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method_ovverride" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(list) {
+			list = JSON.parse(list);
+			
+			var template = Handlebars.compile($("#listTemplate").html());
+			var html = template(list);
+			$(".eachList").remove();
+			$(".totalList").after(html);
+		}
 	});
 
 	$("#title").val("");
@@ -107,21 +125,53 @@ function getList() {
 
 /* 미완료 리스트 조회 */
 function getUncompletedList() {
-	$.getJSON("/list/uncompleted", function(list) {
-		var template = Handlebars.compile($("#uncompletedListTemplate").html());
-		var html = template(list);
-		$(".uncompletedEachList").remove();
-		$(".uncompletedList").after(html);
+	var userId = $("#userId").val();
+	
+	$.ajax({
+		type : "post",
+		url : "/list/uncompleted",
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(list) {
+			list = JSON.parse(list);
+			
+			var template = Handlebars.compile($("#uncompletedListTemplate").html());
+			var html = template(list);
+			$(".uncompletedEachList").remove();
+			$(".uncompletedList").after(html);
+		}
 	});
 }
 
 /* 완료된 리스트 조회 */
 function getCompletedList() {
-	$.getJSON("/list/completed", function(list) {
-		var template = Handlebars.compile($("#completedListTemplate").html());
-		var html = template(list);
-		$(".completedEachList").remove();
-		$(".completedList").after(html);
+	var userId = $("#userId").val();
+	
+	$.ajax({
+		type : "post",
+		url : "/list/completed",
+		headers : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "post"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			userId : userId
+		}),
+		success : function(list) {
+			list = JSON.parse(list);
+			
+			var template = Handlebars.compile($("#completedListTemplate").html());
+			var html = template(list);
+			$(".completedEachList").remove();
+			$(".completedList").after(html);
+		}
 	});
 }
 $("#completedModal").on("hidden.bs.modal", function() {

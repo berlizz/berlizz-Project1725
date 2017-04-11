@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.berlizz.domain.ListVO;
+import com.berlizz.domain.UserVO;
 import com.berlizz.service.ListService;
 
 @RestController
@@ -81,13 +82,13 @@ public class ListController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/{regDate}", method = RequestMethod.GET)
-	public ResponseEntity<List<ListVO>> listSelect(@PathVariable("regDate") String regDate) {
+	@RequestMapping(value = "/{regDate}", method = RequestMethod.POST)
+	public ResponseEntity<List<ListVO>> listSelect(@PathVariable("regDate") String regDate, @RequestBody UserVO vo) {
 		logger.info("listSelect()");
 		ResponseEntity<List<ListVO>> entity = null;
 		
 		try {
-			List<ListVO> list = service.listSelect(regDate);
+			List<ListVO> list = service.listSelect(regDate, vo);
 			entity = new ResponseEntity<>(list, HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -117,13 +118,13 @@ public class ListController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/uncompleted", method = RequestMethod.GET)
-	public ResponseEntity<List<ListVO>> uncompletedSelect() {
-		logger.info("uncompletedSelect()");
+	@RequestMapping(value = "/uncompleted", method = RequestMethod.POST)
+	public ResponseEntity<List<ListVO>> uncompletedSelect(@RequestBody UserVO vo) {
+		logger.info("uncompletedSelect() POST");
 		ResponseEntity<List<ListVO>> entity = null;
 		
 		try {
-			List<ListVO> list = service.uncompletedSelect();
+			List<ListVO> list = service.uncompletedSelect(vo);
 			entity = new ResponseEntity<>(list, HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -134,13 +135,13 @@ public class ListController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/completed", method = RequestMethod.GET)
-	public ResponseEntity<List<ListVO>> completedSelect() {
+	@RequestMapping(value = "/completed", method = RequestMethod.POST)
+	public ResponseEntity<List<ListVO>> completedSelect(@RequestBody UserVO vo) {
 		logger.info("completedSelect()");
 		ResponseEntity<List<ListVO>> entity = null;
 		
 		try {
-			List<ListVO> list = service.completedSelect();
+			List<ListVO> list = service.completedSelect(vo);
 			entity = new ResponseEntity<>(list, HttpStatus.OK);
 			
 		} catch (Exception e) {

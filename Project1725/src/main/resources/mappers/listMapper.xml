@@ -14,13 +14,13 @@
 	<select id="listSelect" resultType="ListVO">
 		select listNumber, title, writer, description, regTimestamp, regDate, attachCount, replyCount
 		from tbl_list
-		where regDate = #{regDate} and completed = 0
+		where regDate = #{regDate} and completed = 0 and userId = #{vo.userId}
 		order by regTimestamp desc
 	</select>
 	
 	<insert id="createList">
-		insert into tbl_list(title, writer, description, regDate)
-		values (#{title}, #{writer}, #{description}, #{regDate})
+		insert into tbl_list(title, writer, description, regDate, userId)
+		values (#{title}, #{writer}, #{description}, #{regDate}, #{userId})
 	</insert>
 	
 	<update id="updateList">
@@ -45,7 +45,7 @@
 		<![CDATA[
 			select listNumber, title, writer, description, regTimestamp, regDate, attachCount, replyCount
 			from tbl_list
-			where regDate < curdate() and completed = 0
+			where regDate < curdate() and completed = 0 and userId = #{userId}
 			order by regTimestamp desc
 		]]>
 	</select>
@@ -54,7 +54,7 @@
 		<![CDATA[
 			select listNumber, title, writer, description, regTimestamp, completedTimestamp, attachCount, replyCount
 			from tbl_list
-			where completedTimestamp > curdate() and completed = 1
+			where completedTimestamp > curdate() and completed = 1 and userId = #{userId}
 			order by regTimestamp desc
 		]]>
 	</select>

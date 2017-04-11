@@ -60,6 +60,11 @@
 		</div>
 	</nav>
 	
+	
+	<%-- 사용자 아이디 저장 --%>
+	<input type="hidden" id="userId" value="${signIn.userId}">
+	
+	
 	<div class="archive">
 		<div class="form-inline">
 			<div class="form-group">
