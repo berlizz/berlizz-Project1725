@@ -18,6 +18,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.berlizz.domain.UserVO;
 import com.berlizz.dto.SignInDTO;
+import com.berlizz.dto.SignUpDTO;
 import com.berlizz.service.UserService;
 
 @Controller
@@ -72,6 +73,21 @@ public class UserController {
 		}
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
+	public void signUp(SignUpDTO dto, Model model) throws Exception {
+		logger.info("signUp()");
+		
+		service.signUp(dto);
+		
+		SignInDTO signInDTO = new SignInDTO();
+		signInDTO.setUserId(dto.getSignUpUserId());
+		signInDTO.setUserPw(dto.getSignUpUserPw());
+		UserVO vo = service.signIn(signInDTO);
+		
+		model.addAttribute("userVO", vo);
+		
 	}
 	
 }

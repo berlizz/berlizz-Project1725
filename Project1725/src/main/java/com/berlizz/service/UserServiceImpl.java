@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.berlizz.domain.UserVO;
 import com.berlizz.dto.SignInDTO;
+import com.berlizz.dto.SignUpDTO;
 import com.berlizz.persistence.UserDAO;
 
 @Service
@@ -29,6 +30,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO checkUserWithSessionKey(String sessionKey) throws Exception {
 		return dao.checkUserWithSessionKey(sessionKey);
+	}
+	
+	@Override
+	public void signUp(SignUpDTO dto) throws Exception {
+		dao.signUp(dto);
 	}
 
 }

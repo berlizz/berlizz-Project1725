@@ -22,5 +22,10 @@
 		from tbl_user
 		where sessionKey = #{sessionKey} and sessionLimit > now()
 	</select>
+	
+	<insert id="signUp">
+		insert into tbl_user(userId, userPw, userName)
+		values (#{signUpUserId}, #{signUpUserPw}, #{signUpUserName})
+	</insert>
 
 </mapper>

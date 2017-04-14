@@ -38,6 +38,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/user/signIn"></mapping>
+			<mapping path="/user/signUp"></mapping>
 			<beans:ref bean="signInInterceptor"></beans:ref>
 		</interceptor>
 		<interceptor>

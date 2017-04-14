@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.berlizz.domain.UserVO;
 import com.berlizz.dto.SignInDTO;
+import com.berlizz.dto.SignUpDTO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -38,6 +39,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserVO checkUserWithSessionKey(String sessionKey) throws Exception {
 		return session.selectOne(namespace + ".checkUserWithSessionKey", sessionKey);
+	}
+	
+	@Override
+	public void signUp(SignUpDTO dto) throws Exception {
+		session.insert(namespace + ".signUp", dto);
 	}
 
 }
