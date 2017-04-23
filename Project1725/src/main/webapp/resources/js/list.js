@@ -2,6 +2,23 @@
  *	list.js 
  */
 
+$(document).ready(function() {
+	
+	/* csrf값을 가지고 ajax통신하기 위해 token 값과 csrf header로 berforeSend에서 설정한 후 데이터 전송 및 받음 */
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		}
+	});
+	
+	getList();
+	getUncompletedList();
+	getCompletedList();
+});
+
 Handlebars.registerHelper("editDescription", function(description) {
 	if(description.length > 35) {
 		return description.substring(0, 35).replace(/<br>/gi, " ") + "...";	
@@ -327,3 +344,11 @@ $("#completeBtn").on("click", function() {
 		}
 	});
 });
+
+function signOut() {
+	$.post("/signOut", {
+		success : function() {
+			window.location = "/";
+		}
+	});
+}

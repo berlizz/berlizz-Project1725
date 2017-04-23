@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/board/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/list/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/calendar/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/archive/**" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/" access="permitAll" />
+		
+		<security:form-login 
+			username-parameter="userId"
+			password-parameter="userPw"
+			login-processing-url="/signInCheck"
+			default-target-url="/board/list"
+			always-use-default-target="true"
+			authentication-failure-url="/?fail=true"
+		/>
+		
+		<security:logout
+			logout-url="/signOut"
+			logout-success-url="/"
+			delete-cookies="JSESSIONID"
+		/>
+		
+	</security:http>
+	
+	
+	<bean id="customJdbcDAOImpl" class="com.berlizz.security.CustomJdbcDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="rolePrefix" value="ROLE_" />
+		<property name="usersByUsernameQuery" value="select userId, userPw, userName from tbl_user where userId = ?" />
+		<property name="authoritiesByUsernameQuery" value="select userAuthority userAuthority from tbl_user_authority where userId = ?" />
+		<property name="enableGroups" value="false" />
+	</bean>
+		
+</beans>

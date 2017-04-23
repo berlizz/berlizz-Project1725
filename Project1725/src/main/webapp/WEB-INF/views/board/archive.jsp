@@ -1,6 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="com.berlizz.domain.SecurityUserVO" %>
+
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Object principal = auth.getPrincipal();
+
+	String userId = "";		// 사용자 아이디
+	String userName = "";	// 사용자 이름
+
+	if(principal != null && principal instanceof SecurityUserVO) {
+		userId = ((SecurityUserVO)principal).getUsername();	// 사용자 아이디
+		userName = ((SecurityUserVO)principal).getName();	// 사용자 이름
+	}
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -11,10 +29,13 @@
 	<link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<%-- 댓글 타임라인 css --%>
 	<link href="/resources/css/timeline.css" rel="stylesheet" type="text/css" />
-	<%-- 업로드 창 css --%>
+
 	<link href="/resources/css/upload.css" rel="stylesheet" type="text/css" />
-	<%-- 아카이브 페이지 css --%>
+
 	<link href="/resources/css/archive.css" rel="stylesheet" type="text/css" />
+	
+	<%-- csrf, csrf header --%>
+	<sec:csrfMetaTags/>
 	
 </head>
 <body>
@@ -46,13 +67,13 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> user name<span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <%=userName%><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">Link1</a></li>
 							<li><a href="#">Link2</a></li>
 							<li><a href="#">Link3</a></li>
 							<li class="divider"></li>
-							<li><a href="/user/signOut">Sign out</a></li>
+							<li><a href="javascript:signOut()">Sign out</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -62,7 +83,8 @@
 	
 	
 	<%-- 사용자 아이디 저장 --%>
-	<input type="hidden" id="userId" value="${signIn.userId}">
+	<input type="hidden" id="userId" value="<%=userId%>">
+	<%-- <input type="hidden" id="userId" value="${signIn.userId}"> --%>
 	
 	
 	<div class="archive">

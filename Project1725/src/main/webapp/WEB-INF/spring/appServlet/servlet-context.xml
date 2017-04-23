@@ -33,7 +33,7 @@
 	</beans:bean>
 	
 	<!-- interceptor -->
-	<beans:bean id="signInInterceptor" class="com.berlizz.interceptor.SignInInterceptor"></beans:bean>
+	<!-- <beans:bean id="signInInterceptor" class="com.berlizz.interceptor.SignInInterceptor"></beans:bean>
 	<beans:bean id="authInterceptor" class="com.berlizz.interceptor.AuthInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
@@ -45,7 +45,7 @@
 			<mapping path="/board/*"></mapping>
 			<beans:ref bean="authInterceptor"></beans:ref>
 		</interceptor>
-	</interceptors>
+	</interceptors> -->
 	
 	<context:component-scan base-package="com.berlizz.controller" />
 	

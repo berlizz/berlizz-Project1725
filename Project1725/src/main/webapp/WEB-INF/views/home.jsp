@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="com.berlizz.domain.SecurityUserVO" %>
+
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Object principal = auth.getPrincipal();
+
+	String name = "";
+	String authority = "";
+
+	if(principal != null && principal instanceof SecurityUserVO) {		
+		name = ((SecurityUserVO)principal).getName();
+		authority = ((SecurityUserVO)principal).getAuthorities().iterator().next().toString();
+	}
+%>
+
 
 <html>
 <head>
@@ -27,14 +47,42 @@
 				<h1><a id="enter" href="">Enter</a></h1>
 			</div>
 			
-			<c:if test="${signIn.userId ne null}">
+			<%-- <c:if test="${signIn.userId ne null}">
 				<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>	
 			</c:if>
 			<c:if test="${signIn.userId eq null}">
 				<button type="button" id="startBtn" class="btn btn-default btn-lg">시작하기</button>	
-			</c:if>
+			</c:if> --%>
+			
+			<sec:authorize access="isAnonymous()">
+				<button type="button" id="startBtn" class="btn btn-default btn-lg">시작하기</button>
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
+				<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>
+			</sec:authorize>
 
 		</div>
+		
+
+		<sec:authorize access="isAuthenticated()">
+			<%=name%>님 반갑습니다.
+			권한은 <%=authority%> 입니다.
+			<form method="post" action="/signOut">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				<input type="submit" value="로그아웃">
+				csrf값과 함께 포스트방식으로 전달해야 되는구나
+			</form>
+			<a href="/signOut" >로그아웃</a>
+			단순한 get방식으로는 되지 않고
+		</sec:authorize>
+		
+		<ul>
+			<sec:authorize access="hasRole('MEMBER')"><li>MEMBER</li></sec:authorize>
+		</ul>
+		
+		
+		
+		
 		
 		<div class="content1">
 			rororo2
@@ -55,7 +103,10 @@
 				</div>
 				
 				<div class="modal-body" style="padding-bottom : 0px;">
-					<form action="/user/signIn" method="post">
+					<form action="/signInCheck" method="post">
+					
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						
 						<div class="form-group">
 							<input type="text" class="form-control" name="userId" id="userId" placeholder="아이디">
 						</div>

@@ -9,6 +9,17 @@ var listTotalNumber;			// 전체 리스트 총 갯수
 var keyword = "";				// 검색 키워드
 
 $(document).ready(function() {
+	
+	/* csrf값을 가지고 ajax통신하기 위해 token 값과 csrf header로 berforeSend에서 설정한 후 데이터 전송 및 받음 */
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		}
+	});
+	
 	getArchiveList(page, perPageNum, keyword);
 });
 
@@ -140,3 +151,10 @@ $(".modal").on("hidden.bs.modal", function() {
 });
 
 
+function signOut() {
+	$.post("/signOut", {
+		success : function() {
+			window.location = "/";
+		}
+	});
+}

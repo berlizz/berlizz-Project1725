@@ -19,6 +19,16 @@ $(document).ready(function() {
 		format : "YYYY-M"
 	});
 	
+	/* csrf값을 가지고 ajax통신하기 위해 token 값과 csrf header로 berforeSend에서 설정한 후 데이터 전송 및 받음 */
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	$.ajaxSetup({
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		}
+	});
+	
 	insertDate(year, month);
 	
 });
@@ -158,4 +168,10 @@ function countRegistered(list, month, lastDate) {
 	}
 }
 
-
+function signOut() {
+	$.post("/signOut", {
+		success : function() {
+			window.location = "/";
+		}
+	});
+}
