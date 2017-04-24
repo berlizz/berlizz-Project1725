@@ -30,6 +30,11 @@
 		
 	</security:http>
 	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customJdbcDAOImpl">
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
 	
 	<bean id="customJdbcDAOImpl" class="com.berlizz.security.CustomJdbcDAOImpl">
 		<property name="dataSource" ref="dataSource" />
@@ -38,5 +43,8 @@
 		<property name="authoritiesByUsernameQuery" value="select userAuthority userAuthority from tbl_user_authority where userId = ?" />
 		<property name="enableGroups" value="false" />
 	</bean>
+	
+	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 		
 </beans>

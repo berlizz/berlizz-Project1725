@@ -79,15 +79,19 @@ public class UserController {
 	public void signUp(SignUpDTO dto, Model model) throws Exception {
 		logger.info("signUp()");
 		
+		model.addAttribute("userId", dto.getSignUpUserId());
+		model.addAttribute("userPw", dto.getSignUpUserPw());
+		
 		service.signUp(dto);
 		
+		/*
 		SignInDTO signInDTO = new SignInDTO();
 		signInDTO.setUserId(dto.getSignUpUserId());
 		signInDTO.setUserPw(dto.getSignUpUserPw());
 		UserVO vo = service.signIn(signInDTO);
 		
 		model.addAttribute("userVO", vo);
-		
+		*/
 	}
 	
 }

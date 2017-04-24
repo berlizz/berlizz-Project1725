@@ -8,10 +8,17 @@
 </head>
 <body>
 
-<%--
-아무런 처리가 없음
-SignInInterceptor에서 리다이렉션함
- --%>
+<form id="signInForm" action="<%=request.getContextPath()%>/signInCheck" method="post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	<input type="hidden" name="userId" value="${userId}">
+	<input type="hidden" name="userPw" value="${userPw}">
+</form>
+
+<script>
+	window.onload = function() {
+		document.getElementById("signInForm").submit();
+	}
+</script>
 
 </body>
 </html>

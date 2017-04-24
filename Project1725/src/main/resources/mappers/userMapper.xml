@@ -27,5 +27,10 @@
 		insert into tbl_user(userId, userPw, userName)
 		values (#{signUpUserId}, #{signUpUserPw}, #{signUpUserName})
 	</insert>
+	
+	<insert id="assignAuthority">
+		insert into tbl_user_authority(userId, userAuthority)
+		values (#{userId}, 'MEMBER')
+	</insert>
 
 </mapper>

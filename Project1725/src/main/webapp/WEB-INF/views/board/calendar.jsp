@@ -27,8 +27,8 @@
 <title>project1725</title>
 
 <link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
 <link href="/resources/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/calendar.css" rel="stylesheet" type="text/css" />
 
 <%-- csrf, csrf header --%>
 <sec:csrfMetaTags/>
@@ -313,52 +313,7 @@
 	<div class="completed"></div>
 
 
-<style>
-	.table {
-		padding-left:2%;
-		padding-right:2%;
-	}
-	table {
-		margin-top:20px;
-		width:100%;
-		border-collapse:collapse;
-	}
-	th {
-		text-align:center;
-		border:2px solid #95a5a6;
-		width:5em;
-	}
-	td {
-		width:5em;
-		height:2em;
-	}
-	.col_1, .col_3, .col_5, .col_7, .col_9, .col_11 {
-		border-bottom:2px solid #95a5a6;
-	}
-	.row_1, .row_3, .row_5, .row_7, .row_9, .row_11, .row_13 {
-		border-right:2px solid #95a5a6;
-	}
-	.row_0 {
-		border-left:2px solid #95a5a6;
-	}
-	.completed {
-		width: 100%;
-		height: 100%;
-		background: green;
-		-moz-border-radius: 50px;
-		-webkit-border-radius: 50px;
-		border-radius: 50px;
-	}
-	.registered {
-		width: 100%;
-		height: 100%;
-		background: red;
-		-moz-border-radius: 50px;
-		-webkit-border-radius: 50px;
-		border-radius: 50px;
-	}
-	
-</style>
+
 
 <script src="/resources/jquery/jquery-3.1.1.min.js"></script>
 <script src="/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>

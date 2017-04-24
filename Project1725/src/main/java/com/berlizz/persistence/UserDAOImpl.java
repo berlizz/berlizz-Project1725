@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.berlizz.domain.UserVO;
 import com.berlizz.dto.SignInDTO;
@@ -18,6 +20,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Inject
 	private SqlSession session;
+	
+	@Inject
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	private static final String namespace = "com.berlizz.mapper.UserMapper";
 	
@@ -41,9 +46,13 @@ public class UserDAOImpl implements UserDAO {
 		return session.selectOne(namespace + ".checkUserWithSessionKey", sessionKey);
 	}
 	
+	@Transactional
 	@Override
 	public void signUp(SignUpDTO dto) throws Exception {
+		dto.setSignUpUserPw(passwordEncoder.encode(dto.getSignUpUserPw()));
 		session.insert(namespace + ".signUp", dto);
+		
+		session.insert(namespace + ".assignAuthority", dto.getSignUpUserId());
 	}
 
 }

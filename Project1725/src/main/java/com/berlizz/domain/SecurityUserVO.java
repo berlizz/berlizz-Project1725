@@ -34,21 +34,24 @@ public class SecurityUserVO implements UserDetails {
 		return "SecurityUserVO [userId=" + userId + ", userPw=" + userPw + ", name=" + name + "]";
 	}
 	
-	@Override	// 유저 아이디 getter
+	@Override	// 유저 아이디 getter 호출
 	public String getUsername() {
-		return userId;
+		return getUserId();
 	}
 	
 	@Override
 	public String getPassword() {
-		return userPw;
+		return getUserPw();
 	}
-	
+
 	@Override
 	public Set<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 	
+	/* 
+	 *	계정만료, 잠김, 패스워드만료, 사용가능 여부기능 모두 사용하지 않아 return true
+	 *  */
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -83,6 +86,10 @@ public class SecurityUserVO implements UserDetails {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getUserPw() {
+		return userPw;
 	}
 
 	public void setUserPw(String userPw) {
