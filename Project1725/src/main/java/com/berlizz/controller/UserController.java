@@ -84,14 +84,6 @@ public class UserController {
 		
 		service.signUp(dto);
 		
-		/*
-		SignInDTO signInDTO = new SignInDTO();
-		signInDTO.setUserId(dto.getSignUpUserId());
-		signInDTO.setUserPw(dto.getSignUpUserPw());
-		UserVO vo = service.signIn(signInDTO);
-		
-		model.addAttribute("userVO", vo);
-		*/
 	}
 	
 }

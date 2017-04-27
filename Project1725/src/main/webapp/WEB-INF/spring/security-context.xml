@@ -19,13 +19,19 @@
 			login-processing-url="/signInCheck"
 			default-target-url="/board/list"
 			always-use-default-target="true"
-			authentication-failure-url="/?fail=true"
+			authentication-failure-handler-ref="customAuthenticationFailureHandler"
 		/>
 		
 		<security:logout
 			logout-url="/signOut"
 			logout-success-url="/"
-			delete-cookies="JSESSIONID"
+			delete-cookies="JSESSIONID, remember-me"
+		/>
+		
+		<security:remember-me
+			remember-me-parameter="rememberMe"
+			user-service-ref="customJdbcDAOImpl"
+			token-repository-ref="customJdbcTokenRepositoryImpl"
 		/>
 		
 	</security:http>
@@ -42,6 +48,19 @@
 		<property name="usersByUsernameQuery" value="select userId, userPw, userName from tbl_user where userId = ?" />
 		<property name="authoritiesByUsernameQuery" value="select userAuthority userAuthority from tbl_user_authority where userId = ?" />
 		<property name="enableGroups" value="false" />
+	</bean>
+	
+	<bean id="customJdbcTokenRepositoryImpl" class="com.berlizz.security.CustomJdbcTokenRepositoryImpl">
+		<property name="dataSource" ref="dataSource" />
+		<property name="tokensBySeriesSql" value="select userId, series, token, lastUsed from tbl_persistent_logins where series = ?" />
+		<property name="insertTokenSql" value="insert into tbl_persistent_logins (userId, series, token, lastUsed) values(?,?,?,?)" />
+		<property name="updateTokenSql" value="update tbl_persistent_logins set token = ?, lastUsed = ? where series = ?" />
+		<property name="removeUserTokensSql" value="delete from tbl_persistent_logins where userId = ?" />
+	</bean>
+	
+	<bean id="customAuthenticationFailureHandler" class="com.berlizz.security.CustomAuthenticationFailureHandler">
+		<property name="signInIdName" value="userId" />
+		<property name="defaultFailureUrl" value="/" />
 	</bean>
 	
 	

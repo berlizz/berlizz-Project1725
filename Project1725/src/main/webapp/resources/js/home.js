@@ -97,3 +97,10 @@ $("#signUpModal").on("hidden.bs.modal", function() {
 	$("#signUpUserPw").val("");
 	$("#signUpUserPwCheck").val("");
 });
+
+/* 로그인 실패 시 처리 */
+function signInFail(userId) {
+	$("#signInModal").modal("show");
+	$("#userId").val(userId);
+	alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+}

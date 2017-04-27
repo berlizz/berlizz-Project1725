@@ -47,6 +47,7 @@
 				<h1><a id="enter" href="">Enter</a></h1>
 			</div>
 			
+			
 			<%-- <c:if test="${signIn.userId ne null}">
 				<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>	
 			</c:if>
@@ -100,7 +101,7 @@
 						</div>
 						<div class="form-group">
 							<label>
-								<input type="checkbox" name="useCookie"> 로그인 상태 유지하기
+								<input type="checkbox" name="rememberMe"> 로그인 상태 유지하기
 							</label>
 						</div>
 						<div class="form-group">
@@ -159,10 +160,17 @@
 	
 	</div>
 	
-	
+	<script src="/resources/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+	<script src="/resources/js/home.js"></script>
+	<c:if test="${signInId ne null}">
+		<input type="hidden" id="signInFail" value="${signInId}" />
+		<%
+			session.removeAttribute("signInId");
+		%>
+		<script>signInFail($("#signInFail").val())</script>
+	</c:if>
 </body>
-<script src="/resources/jquery/jquery-3.1.1.min.js"></script>
-<script src="/resources/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
-<script src="/resources/js/home.js"></script>
+
 </html>
 
