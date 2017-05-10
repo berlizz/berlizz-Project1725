@@ -23,7 +23,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>berlizz | Home</title>
 	
 	<link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	
@@ -37,16 +37,11 @@
 		<div class="intro">
 			
 			<div class="intro-header">
-				<h1>Hello world!</h1>
+				<h1>Personal Project</h1>
+				<p>개인 프로젝트</p>
+				<p>리스트를 작성하여 관리하세요</p>
+				<p>시작하기 버튼을 누르시면 로그인 합니다</p>
 			</div>
-			
-			<P>  The time on the server is ${serverTime}. </P>
-			<p> 한글 테스트 </p>
-			
-			<div>
-				<h1><a id="enter" href="">Enter</a></h1>
-			</div>
-			
 			
 			<%-- <c:if test="${signIn.userId ne null}">
 				<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>	
@@ -55,27 +50,19 @@
 				<button type="button" id="startBtn" class="btn btn-default btn-lg">시작하기</button>	
 			</c:if> --%>
 			
-			<sec:authorize access="isAnonymous()">
-				<button type="button" id="startBtn" class="btn btn-default btn-lg">시작하기</button>
-			</sec:authorize>
-			<sec:authorize access="isAuthenticated()">
-				<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>
-			</sec:authorize>
+			<div class="intro-body">
+				<sec:authorize access="isAnonymous()">
+					<button type="button" id="startBtn" class="btn btn-default btn-lg">시작하기</button>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<button type="button" class="btn btn-default btn-lg startBtn" onClick="javascript:enter()">시작하기</button>
+				</sec:authorize>
+				<a href="https://github.com/berlizz/berlizz-Project1725" type="button" class="btn btn-default btn-lg">Git Hub</a>
+			</div>
 
 		</div>
 		
 		
-		<div class="content1">
-			<div style="width:30%; height:100%; float:left; background-color:#3498db;">
-				rororo
-			</div>
-			<div style="width:70%; float:right;">
-				rororo2
-			</div>
-		</div>
-		<div class="content2">
-			rororo3
-		</div>
 	</div>
 	
 	

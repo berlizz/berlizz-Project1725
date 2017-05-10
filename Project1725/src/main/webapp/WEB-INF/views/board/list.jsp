@@ -24,7 +24,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>project1725</title>
+	<title>berlizz | List</title>
 	
 	<link href="/resources/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<%-- 댓글 타임라인 css --%>
@@ -42,7 +42,7 @@
 <body>
 	
 	<div style="height:100px; width:100%; font-size:50px; text-align:center; background-color:#337ab7;">
-		<a href="/" style="decoration:none; color:white;">hello</a>
+		<a href="/" style="decoration:none; color:white;">Personal Project</a>
 	</div>
 	
 	
@@ -63,16 +63,12 @@
 					<li class="active"><a href="#">List <span class="sr-only">(current)</span></a></li>
 					<li><a href="/board/calendar">Calendar</a></li>
 					<li><a href="/board/archive">Archive</a></li>
-					<li><a href="#">Link4</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <%=userName%><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Link1</a></li>
-							<li><a href="#">Link2</a></li>
-							<li><a href="#">Link3</a></li>
-							<li class="divider"></li>
+							<!-- <li class="divider"></li> -->
 							<li><a href="javascript:signOut()" id="signOutBtn">Sign out</a></li>
 						</ul>
 					</li>

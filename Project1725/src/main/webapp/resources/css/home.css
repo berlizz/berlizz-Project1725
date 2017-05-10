@@ -20,6 +20,12 @@ body, h1 {
 .intro-header {
 	text-align : center;
 	color : #ffffff;
+	padding : 5%;
+}
+
+.intro-body {
+	padding : 1%;
+	margin : 5%;
 }
 
 .modal-header {
